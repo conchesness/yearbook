@@ -16,6 +16,7 @@ class User(Document):
     lname = StringField()
     image = URLField()
     birthdate = DateField()
+    personalemail = EmailField()
     meta = {
         'ordering': ['+lname', '+fname']
     }
@@ -24,8 +25,12 @@ class Contributor(EmbeddedDocument):
     user = ReferenceField('User')
     # Editor, Signer, ...
     role = StringField()
+    # Invited, Accepted
+    status = StringField()
+    invitemsg = StringField()
 
 class Book(Document):
+    title = StringField()
     owner = ReferenceField('User')
     contributors = ListField(EmbeddedDocumentField(Contributor))
     pages = ListField(ReferenceField('Page'))
@@ -33,12 +38,19 @@ class Book(Document):
     status = StringField()
 
 class Page(Document):
-    image1 = FileField()
-    image2 = FileField()
-    image3 = FileField()
-    image4 = FileField() 
-    image5 = FileField()
-
+    owner = ReferenceField('User')
+    # Draft, Private, Public
+    status = StringField()
+    # Club, Dept, Friends, ...
+    category = StringField()
+    contributors = ListField(EmbeddedDocumentField(Contributor))
+    # If we have multiple layouts this could be a selectfield on the form
+    # Initial layout will be header image and one body image
+    layout = StringField()
+    title = StringField()
+    headerimage = FileField()
+    images = ListField(FileField())
+    description = StringField()
 
 class Feedback(Document): 
     author = ReferenceField('User',reverse_delete_rule=CASCADE)
@@ -80,7 +92,14 @@ class Comment(Document):
         'ordering': ['+createdate']
     }
 
-# TODO delete/Hide EVent
 class Event(Document):
     owner = ReferenceField('User')
-    title = StringFi
+    title = StringField()
+    desc = StringField()
+    #date = DateTimeField(format='%Y-%m-%d')
+    date = DateTimeField()
+    #job = ReferenceField('Job',reverse_delete_rule=CASCADE)
+
+    meta = {
+        'ordering': ['+date']
+    }

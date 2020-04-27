@@ -115,9 +115,9 @@ def login():
 
     # get the google email address from the data object and check to see if the user has an ousd email account.  
     # Deny access if they do not
-    if not data['emailAddresses'][0]['value'][-8:] == "ousd.org":
-        flash('You must have an ousd.org email address to access this site')
-        return redirect(url_for('logout'))
+    # if not data['emailAddresses'][0]['value'][-8:] == "ousd.org":
+    #     flash('You must have an ousd.org email address to access this site')
+    #     return redirect(url_for('logout'))
 
     try:
         # see if the user already exists in the user dtabase document. If they don't then this attempt
