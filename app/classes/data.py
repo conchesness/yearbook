@@ -3,14 +3,14 @@ from mongoengine import Document, EmailField, BooleanField, URLField, DateField,
 import datetime as d
 
 class User(Document):
-    # TODO fix where it puts displayName here
     gfname = StringField()
     glname = StringField() 
     email = EmailField()
     gid = StringField(unique=True)
     # App Admin, Student
     role = StringField()
-    admin = BooleanField()
+    issenior = BooleanField(default=False)
+    admin = BooleanField(default=False)
     pronouns = StringField()
     fname = StringField()
     lname = StringField()
@@ -21,6 +21,10 @@ class User(Document):
         'ordering': ['+lname', '+fname']
     }
 
+class OTSeniors(Document):
+    aeriesid = IntField()
+    ousdemail = EmailField()
+
 class Contributor(EmbeddedDocument):
     user = ReferenceField('User')
     # Editor, Signer, ...
@@ -29,7 +33,7 @@ class Contributor(EmbeddedDocument):
     status = StringField()
     invitemsg = StringField()
 
-class Book(Document):
+class YBook(Document):
     title = StringField()
     owner = ReferenceField('User')
     contributors = ListField(EmbeddedDocumentField(Contributor))

@@ -1,22 +1,3 @@
-'''
-User management is a critical component of any website. This file does two differnet things:
-
-1) This file users Googles API to securely authenticate the users to this site. Mostly you just want to leave the code that does this
-alone.
-
-2) This file manages how users are described on the site.  This could be given users the ability to change their names from how they
-are in Google or changing their default picture or managing other values that are unique to your application like is the user
-an administrator etc.
-
-Users are managed by several different files: 
-* in app/classes/data.py there is a User data class that defines what data fields are stored for each user
-* in app/classes/formd.py there is a UserForm class that defines what fields can be edited for each user
-* There is this file which does all the hard work.  the /login and /editprofile routes are were you might
-want to make changes for your site 
-* in app/templates/profile.html and app/templates/editprofile.html are the templates that are used to 
-display and edit information about the users
-'''
-
 from app import app
 from .scopes import *
 
@@ -120,20 +101,10 @@ def login():
     #     return redirect(url_for('logout'))
 
     try:
-        # see if the user already exists in the user dtabase document. If they don't then this attempt
+        # see if the user already exists in the user database document. If they don't then this attempt
         # to create a currUser object from the User class in the data.py file will fail 
         currUser = User.objects.get(gid = data['emailAddresses'][0]['metadata']['source']['id'])
         flash(f'Welcome Back! {currUser.fname}')
-        # Check the email address in the data object to see if it is in the admins list and update the users
-        # database record if needed.
-        if data['emailAddresses'][0]['value'] in admins:
-            admin = True
-            if currUser.admin == False:
-                currUser.update(admin=True)
-        else:
-            admin = False
-            if currUser.admin == True:
-                currUser.update(admin=False)
         
     except:
         # If the user was not in the database, then set some variables and create them
@@ -142,12 +113,6 @@ def login():
             role = 'student'
         else:
             role = 'teacher'
-
-        #See if the new user is in the Admins list
-        if data['emailAddresses'][0]['value'] in admins:
-            admin = True
-        else:
-            admin = False
 
         # Create a newUser object filled with the google values and the values that were just created
         newUser = User(
@@ -158,27 +123,35 @@ def login():
                         lname=data['names'][0]['familyName'],
                         email=data['emailAddresses'][0]['value'],
                         image=data['photos'][0]['url'],
-                        role=role,
-                        admin=admin
-                       )
-        # save the newUser
+                        role=role                       )
         newUser.save()
-        # then use the mongoengine get() method to get the newUser from the database as the currUser
-        # gid is a unique attribute in the User class that matches google's id which is in the data object
-        currUser = User.objects.get(gid = data['emailAddresses'][0]['metadata']['source']['id'])
-        # send the new user a msg
-        flash(f'Welcome {currUser.fname}.  A New user has been created for you.')
+        # Are they a senior
+        if newUser.role == 'student':
+            try:
+                OTSeniors.objects.get(ousdemail=data['emailAddresses'][0]['value'])
+                issenior=True
+                newUser.update(issenior=issenior)
+            except:
+                issenior=False
 
-    # this code puts several values in the session list variable.  The session variable is a great place
-    # to store values that you want to be able to access while a user is logged in. The va;ues in the sesion
-    # list can be added, changed, deleted as you would with any python list.
+        currUser = newUser
+        flash(f'Welcome {currUser.fname} {currUser.lname}.  A New user has been created for you.')
+
+    if currUser.email in admins:
+        if currUser.admin == False:
+            currUser.update(admin=True, issenior=True)
+    else:
+        if currUser.admin == True:
+            currUser.update(admin=False)
+
     session['currUserId'] = str(currUser.id)
     session['displayName'] = currUser.fname+" "+currUser.lname
-    session['gid'] = data['emailAddresses'][0]['metadata']['source']['id']
+    session['gid'] = currUser.gid
     # this stores the entire Google Data object in the session
     session['gdata'] = data
     session['role'] = currUser.role
-    session['admin'] = admin
+    session['admin'] = currUser.role
+    session['issenior'] = currUser.issenior
     # The return_URL value is set above in the before_request route. This enables a user you is redirected to login to
     # be able to be returned to the page they originally asked for.
     return redirect(session['return_URL'])

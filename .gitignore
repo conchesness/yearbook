@@ -134,3 +134,5 @@ dmypy.json
 
 # CapstoneTemplate
 credentials.json
+zcripts.py
+*.csv

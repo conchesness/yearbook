@@ -1,7 +1,4 @@
-The files in this folder contain various classes for creating objects to be used in the app. 
-
-The data.py file contains data classes that use mongoengine as their parent classes.  A mongoengine data object contains 
-the methods that are inherited from mongoengine and the attributes that are defined in the data.py file. 
-
-The forms.py file contains form classes that use wtforms as their parent classes.  A wtforms form object contains 
-the methods that are inherited from wtforms and the attributes that are defined in the forms.py file.
+This site uses MongoDB.  It would likely be good to switch to Firebase only because I might be able to get it donated 
+but that's a horse of a different color. The primary data collections are YBook, Page, User.  Contributor is actually 
+embedded within Page and YBook. Need to build out the signature process and can maybe reuse some of the collections 
+that are here?

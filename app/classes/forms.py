@@ -15,24 +15,24 @@ class UserForm(FlaskForm):
     personalemail = EmailField('Personal Email',validators=[Optional(),Email()])
     submit = SubmitField("Submit")
 
-class BookForm(FlaskForm):
+class YBookForm(FlaskForm):
     title = StringField('Yearbook Title')
     status = SelectField('Status', choices=[('draft','draft'),('private','private'),('public','public')])
+    submit = SubmitField("Submit")
 
 class PageForm(FlaskForm):
     title = StringField()
     status = SelectField('Status', choices=[('draft','draft'),('private','private'),('public','public')])
     category = SelectField('Category', choices=[('personal','personal'),('club','club'),('department','department'),('sport','sport'),('Other','Other')])
-    layout = SelectField('Layout', choices=[('1 body image','1 body image'),('4 body images','4 body images')])
+    layout = SelectField('Layout', choices=[('1 body image','1 body image'),('4 body images','4 body images')],validators=[Optional()])
     headerimage = FileField('Header Image')
     description = TextAreaField('Description')
+    submit = SubmitField("Submit")
 
 class InviteForm(FlaskForm):
     email = EmailField('Other Email',validators=[Optional(),Email()])
     invitemsg = TextAreaField('Message')
-
-
-
+    submit = SubmitField("Submit")
 
 class PostForm(FlaskForm):
     subject = StringField("Title")

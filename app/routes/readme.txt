@@ -1,7 +1,6 @@
-The routes directory contains the files that generate the content that is deisplayed on the pages.  This 
-is different from the Templates directory which contains the files which actually control how the page looks.
-A route is a function that catches what the user put in to the browser and then retrieves that data and sends
-it to the template. Routes are Flask's magic.  Each route has a decorator which, if the route matches what
-the user requests then that code for that route is run.
+This site was made from a template that I give to my Seniors to enable them to get up and running quickly.  
+There is some functionality in this site like the calendar that we will likely not use.
 
-See the feedback.py file for detailed description of how this works.
+ybook.py and user.py are the primary files for the virtual yearbook app.
+
+We will likely use the Feedback feature for feedback on the site?
