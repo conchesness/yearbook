@@ -94,7 +94,19 @@ def newpage():
 
     return render_template('ybooknewpage.html', form=form, ybook=currYBook)
 
-    
+@app.route('/deletepage/<pageid>')
+def deletepage(pageid):
+    currUser = User.objects.get(pk = session['currUserId'])
+    page = Page.objects.get(pk = pageid)
+    if not page.owner == currUser:
+        flash(f"You can't delete pages you don't own.")
+        return redirect(url_for('ybook'))
+    flash(f'{page.title} has been deleted.')
+    page.delete()
+    return redirect(url_for('ybook'))
+
+
+
 
 
 

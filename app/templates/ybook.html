@@ -10,9 +10,10 @@
 
     {% if pages %}
         {% for page in pages %}
-            {{page.title}} <br>
-            Photo: <img width = "200" src="data:image/jpeg;base64,{{base64encode(page.headerimage.read())}}"> <br>
-            {{page.headerimage.content_type}} <br>
+            Title: {{page.title}} <br>
+            Headerimage: <img width = "200" src="data:image;base64,{{base64encode(page.headerimage.read())}}"> <br>
+            <a href="/deletepage/{{page.id}}" class="btn btn-primary btn-sm" role="button">Delete Page</a> <br>
+            <hr>
         {% endfor %}
     {% endif %}
 
