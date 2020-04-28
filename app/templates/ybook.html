@@ -11,7 +11,8 @@
     {% if pages %}
         {% for page in pages %}
             {{page.title}} <br>
-            {{page.headerimage}} <br>
+            Photo: <img width = "200" src="data:image/jpeg;base64,{{base64encode(page.headerimage.read())}}"> <br>
+            {{page.headerimage.content_type}} <br>
         {% endfor %}
     {% endif %}
 

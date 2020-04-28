@@ -4,6 +4,7 @@ from app.classes.forms import YBookForm, PageForm, InviteForm
 import datetime as dt
 from flask import render_template, redirect, url_for, request, session, flash
 from mongoengine import Q
+import base64
 
 # routes
 # viewBook (list pages in book)
@@ -22,6 +23,7 @@ def ybook():
     currUser = User.objects.get(gid=session['gid'])
     try:
         pages = Page.objects(owner=currUser)
+
     except:
         pages = None
     # confirm the use is an OT Senior
@@ -75,16 +77,17 @@ def newpage():
 
     if form.validate_on_submit():
 
-        headerimage = form.headerimage.data.encode("utf-8")
+        # headerimage_64_encode = base64.encodestring(form.headerimage.data)
 
         newPage = Page(
             owner = currUser,
             status = form.status.data,
             category = form.category.data,
             title = form.title.data,
-            headerimage = headerimage,
             description = form.description.data
         )
+        
+        newPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
         newPage.save()
 
         return redirect(url_for('ybook'))

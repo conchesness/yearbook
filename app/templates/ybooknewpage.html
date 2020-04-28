@@ -5,7 +5,7 @@
     {{ error }}: {{form.errors[error]}}
     {% endfor %}
 
-    <form method=post>
+    <form method=post enctype="multipart/form-data">
         {{ form.hidden_tag() }}{{form.title.label}}: {{form.title(size = '50')}} <br>
         {{form.status.label}}{{form.status()}} <br>
         {{form.category.label}}{{form.category()}} <br>
