@@ -2,7 +2,7 @@ from app import app
 from .scopes import *
 
 from flask import render_template, redirect, url_for, request, session, flash
-from app.classes.data import User
+from app.classes.data import User, OTSeniors
 from app.classes.forms import UserForm
 from requests_oauth2.services import GoogleClient
 from requests_oauth2 import OAuth2BearerToken
@@ -16,7 +16,7 @@ import os
 CLIENT_SECRETS_FILE = "credentials.json"
 
 # List of email addresses for Admin users
-admins = ['stephen.wright@ousd.org','s_your.name@ousd.org']
+admins = ['stephen.wright@ousd.org','sara.ketcham@ousd.org']
 
 # This code is run right after the app starts up and then not again. It defines a few universal things
 # like is the app being run on a local computer and what is the local timezone
@@ -128,13 +128,12 @@ def login():
         # Are they a senior
         if newUser.role == 'student':
             try:
-                OTSeniors.objects.get(ousdemail=data['emailAddresses'][0]['value'])
-                issenior=True
-                newUser.update(issenior=issenior)
+                oTSenior = OTSeniors.objects.get(ousdemail=newUser.email)
+                newUser.update(issenior=True,aeriesid=oTSenior.aeriesid)
             except:
-                issenior=False
+                pass
 
-        currUser = newUser
+        currUser = User.objects.get(email = newUser.email)
         flash(f'Welcome {currUser.fname} {currUser.lname}.  A New user has been created for you.')
 
     if currUser.email in admins:

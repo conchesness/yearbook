@@ -6,6 +6,7 @@ class User(Document):
     gfname = StringField()
     glname = StringField() 
     email = EmailField()
+    aeriesid = IntField()
     gid = StringField(unique=True)
     # App Admin, Student
     role = StringField()
