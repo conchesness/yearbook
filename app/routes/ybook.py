@@ -67,7 +67,7 @@ def editybook():
 def page(pageid):
     currPage = Page.objects.get(pk = pageid)
 
-    return render_template('page.html', page = currPage)
+    return render_template('ybookpage.html', page = currPage)
 
 @app.route('/newpage', methods=['GET', 'POST'])
 def newpage():
@@ -86,37 +86,64 @@ def newpage():
         newPage = Page(
             owner = currUser,
             status = form.status.data,
-            category = form.category.data,
             title = form.title.data,
             description = form.description.data
         )
-        
         newPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
+        newPage.image1.put(form.image1.data, content_type = 'image/jpeg')
+        newPage.image2.put(form.image2.data, content_type = 'image/jpeg')
+        newPage.image3.put(form.image3.data, content_type = 'image/jpeg')
+        newPage.image4.put(form.image4.data, content_type = 'image/jpeg')
         newPage.save()
 
         return redirect(url_for('ybook'))
 
     return render_template('ybooknewpage.html', form=form, ybook=currYBook)
+    
+@app.route('/editpage/<pageid>', methods=['GET', 'POST'])
+def editpage(pageid):
 
-@app.route('/pageimgs/<pageid>', methods=['GET', 'POST'])
-def pageimgs(pageid):
+    currUser = User.objects.get(pk=session['currUserId'])
+    currYBook = YBook.objects.get(owner = currUser)
+    editPage = Page.objects.get(id = pageid)
 
-    editPage = Page.objects.get(pk = pageid)
-    form = PageImgForm()
-
-    #TODO check to see if the image is new or replacing an existing image
+    if not currUser.issenior:
+        flash(f'You can only create pages if you are a senior.')
+        return redirect('/')
+    
+    form = PageForm()
 
     if form.validate_on_submit():
 
-        newImage.image.put(bytes(form.image.data,"utf-8"),content_type = 'image/jpeg')
-
-        editPage.images.append(newImage)
+        editPage.update(
+            status = form.status.data,
+            title = form.title.data,
+            description = form.description.data
+        )
+        if form.headerimage.data:
+            editPage.headerimage.replace(form.headerimage.data, content_type = 'image/jpeg')
+        if form.image1.data:
+            editPage.image1.replace(form.image1.data, content_type = 'image/jpeg')
+        if form.image2.data:
+            editPage.image2.replace(form.image2.data, content_type = 'image/jpeg')
+        if form.image3.data:
+            editPage.image3.replace(form.image3.data, content_type = 'image/jpeg')
+        if form.image4.data:
+            editPage.image4.replace(form.image4.data, content_type = 'image/jpeg')
         editPage.save()
 
-        return redirect(url_for('page',pageid=pageid))
+        return redirect(url_for('ybook'))
+    form.status.data = editPage.status
+    #form.category.data = editPage.category
+    form.title.data = editPage.title
+    form.description.data = editPage.description
+    form.image1.data = editPage.image1
+    form.image2.data = editPage.image2
+    form.image3.data = editPage.image3
+    form.image4.data = editPage.image4
 
-    return render_template('ybookpageimgform.html', form=form)
-    
+    return render_template('ybooknewpage.html', form=form, ybook=currYBook, page=editPage)
+
 
 @app.route('/deletepage/<pageid>')
 def deletepage(pageid):

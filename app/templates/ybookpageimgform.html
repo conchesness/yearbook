@@ -11,9 +11,7 @@
     {% endfor %}
     <form method="post">
         {{ form.hidden_tag() }}
-        {{form.imagename.label}}: {{form.imagename()}} <br>
         {{form.image.label}}: {{form.image()}} <br>
-        {{form.imagecaption.label}}: {{form.imagecaption()}} <br>
         {{form.submit()}}
     </form>
 

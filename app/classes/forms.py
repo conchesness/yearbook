@@ -23,14 +23,18 @@ class YBookForm(FlaskForm):
 class PageForm(FlaskForm):
     title = StringField()
     status = SelectField('Status', choices=[('draft','draft'),('private','private'),('public','public')])
-    category = SelectField('Category', choices=[('personal','personal'),('club','club'),('department','department'),('sport','sport'),('Other','Other')])
+    #category = SelectField('Category', choices=[('personal','personal'),('club','club'),('department','department'),('sport','sport'),('Other','Other')])
     layout = SelectField('Layout', choices=[('1 body image','1 body image'),('4 body images','4 body images')],validators=[Optional()])
     headerimage = FileField('Header Image')
+    image1 = FileField('Image 1')
+    image2 = FileField('Image 2')
+    image3 = FileField('Image 3')
+    image4 = FileField('Image 4')
     description = TextAreaField('Description')
     submit = SubmitField("Submit")
 
 class PageImgForm(FlaskForm):
-    image = FileField('Image 1')
+    image = FileField('Image')
     submit = SubmitField("Submit")
 
 class InviteForm(FlaskForm):

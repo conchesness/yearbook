@@ -8,9 +8,28 @@
     <form method=post enctype="multipart/form-data">
         {{ form.hidden_tag() }}{{form.title.label}}: {{form.title(size = '50')}} <br>
         {{form.status.label}}{{form.status()}} <br>
-        {{form.category.label}}{{form.category()}} <br>
-        {{form.headerimage.label}}{{form.headerimage()}} <br>
-        {{form.description.label}}{{form.description()}} <br>
+        Statement: {{form.description(rows=6, cols=100)}} <br>
+
+        <b>Header Image</b> <br>
+        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.headerimage.read())}}">
+        {{form.headerimage()}} <br>
+
+        <b>Image 1</b> <br>
+        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image1.read())}}">
+        {{form.image1()}} <br>
+
+        <b>Image 2</b> <br>
+        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image2.read())}}">
+        {{form.image2()}} <br>
+
+        <b>Image 3</b><br>
+        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image3.read())}}">
+        {{form.image3()}} <br>
+
+        <b>Image 4</b> <br>
+        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image4.read())}}">
+        {{form.image4()}} <br>
+
         {{form.submit()}}
     </form>
 
