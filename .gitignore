@@ -136,3 +136,4 @@ dmypy.json
 credentials.json
 zcripts.py
 *.csv
+app.yaml
