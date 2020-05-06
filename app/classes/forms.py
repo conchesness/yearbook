@@ -29,6 +29,10 @@ class PageForm(FlaskForm):
     description = TextAreaField('Description')
     submit = SubmitField("Submit")
 
+class PageImgForm(FlaskForm):
+    image = FileField('Image 1')
+    submit = SubmitField("Submit")
+
 class InviteForm(FlaskForm):
     email = EmailField('Other Email',validators=[Optional(),Email()])
     invitemsg = TextAreaField('Message')

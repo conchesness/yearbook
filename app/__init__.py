@@ -8,7 +8,7 @@ from flask_moment import Moment
 import base64
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY") or os.urandom(20)
+app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY") # or os.urandom(20)
 # you must change the next line to be link to your database at mlab
 connect("yearbook", host='mongodb+srv://admin:bulldogz@cluster0-8m0v1.gcp.mongodb.net/test?retryWrites=true&w=majority')
 

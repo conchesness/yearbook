@@ -1,6 +1,6 @@
 from app import app
 from app.classes.data import YBook, Page, Contributor, User
-from app.classes.forms import YBookForm, PageForm, InviteForm
+from app.classes.forms import YBookForm, PageForm, InviteForm, PageImgForm
 import datetime as dt
 from flask import render_template, redirect, url_for, request, session, flash
 from mongoengine import Q
@@ -63,6 +63,12 @@ def editybook():
 
     return render_template('ybookedit.html', form=form, currYBook=currYBook)
 
+@app.route('/page/<pageid>')
+def page(pageid):
+    currPage = Page.objects.get(pk = pageid)
+
+    return render_template('page.html', page = currPage)
+
 @app.route('/newpage', methods=['GET', 'POST'])
 def newpage():
 
@@ -76,8 +82,6 @@ def newpage():
     form = PageForm()
 
     if form.validate_on_submit():
-
-        # headerimage_64_encode = base64.encodestring(form.headerimage.data)
 
         newPage = Page(
             owner = currUser,
@@ -93,6 +97,26 @@ def newpage():
         return redirect(url_for('ybook'))
 
     return render_template('ybooknewpage.html', form=form, ybook=currYBook)
+
+@app.route('/pageimgs/<pageid>', methods=['GET', 'POST'])
+def pageimgs(pageid):
+
+    editPage = Page.objects.get(pk = pageid)
+    form = PageImgForm()
+
+    #TODO check to see if the image is new or replacing an existing image
+
+    if form.validate_on_submit():
+
+        newImage.image.put(bytes(form.image.data,"utf-8"),content_type = 'image/jpeg')
+
+        editPage.images.append(newImage)
+        editPage.save()
+
+        return redirect(url_for('page',pageid=pageid))
+
+    return render_template('ybookpageimgform.html', form=form)
+    
 
 @app.route('/deletepage/<pageid>')
 def deletepage(pageid):

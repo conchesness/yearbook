@@ -48,13 +48,16 @@ class Page(Document):
     status = StringField()
     # Club, Dept, Friends, ...
     category = StringField()
-    contributors = ListField(EmbeddedDocumentField(Contributor))
+    contributors = ListField(EmbeddedDocumentField('Contributor'))
     # If we have multiple layouts this could be a selectfield on the form
     # Initial layout will be header image and one body image
     layout = StringField()
     title = StringField()
     headerimage = FileField()
-    images = ListField(FileField())
+    image1 = FileField()
+    image2 = FileField()
+    image3 = FileField()
+    image4 = FileField()
     description = StringField()
 
 class Feedback(Document): 

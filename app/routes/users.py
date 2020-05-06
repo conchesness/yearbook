@@ -4,6 +4,7 @@ from .scopes import *
 from flask import render_template, redirect, url_for, request, session, flash
 from app.classes.data import User, OTSeniors
 from app.classes.forms import UserForm
+from .credentials import GOOGLE_CLIENT_CONFIG
 from requests_oauth2.services import GoogleClient
 from requests_oauth2 import OAuth2BearerToken
 import requests
@@ -13,10 +14,11 @@ import googleapiclient.discovery
 import os
 
 # this is a reference to the google project json file you downloaded using the setup.txt instructions
-CLIENT_SECRETS_FILE = "credentials.json"
+# CLIENT_SECRETS_FILE = "credentials.json"
+
 
 # List of email addresses for Admin users
-admins = ['stephen.wright@ousd.org','sara.ketcham@ousd.org']
+admins = ['stephen.wright@ousd.org','sara.ketcham@ousd.org', 's_annettechau.tran@ousd.org', 'akbarpasha@gmail.com','s_ashly.benitez@ousd.org','s_annabella.ricucci@ousd.org ']
 
 # This code is run right after the app starts up and then not again. It defines a few universal things
 # like is the app being run on a local computer and what is the local timezone
@@ -215,8 +217,11 @@ def editprofile():
 def authorize():
 
     # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-      CLIENT_SECRETS_FILE, scopes=SCOPES)
+    # flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES)
+
+    flow = google_auth_oauthlib.flow.Flow.from_client_config(
+        client_config=GOOGLE_CLIENT_CONFIG,
+        scopes=SCOPES)
 
     # The URI created here must exactly match one of the authorized redirect URIs
     # for the OAuth 2.0 client, which you configured in the API Console. If this
@@ -248,7 +253,10 @@ def oauth2callback():
     # verified in the authorization server response.
     state = session['state']
 
-    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
+    # flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(CLIENT_SECRETS_FILE, scopes=SCOPES, state=state)
+    flow = google_auth_oauthlib.flow.Flow.from_client_config(
+        client_config=GOOGLE_CLIENT_CONFIG,
+        scopes=SCOPES, state=state)
     flow.redirect_uri = url_for('oauth2callback', _external=True)
 
     # Use the authorization server's response to fetch the OAuth 2.0 tokens.
