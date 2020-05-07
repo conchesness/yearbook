@@ -6,8 +6,7 @@
     Title: {{ ybook.title }} <br>
     <a href="/editybook" class="btn btn-primary btn-sm" role="button">Edit Yearbook</a> <br>
 <hr>
-    <a href="/newpage" class="btn btn-primary btn-sm" role="button">New Page</a> <br>
-    <a href="/editpage/{{page.id}}">Edit Page</a> <br>
+
 
 
     {% if pages %}
@@ -15,11 +14,15 @@
             Title: {{page.title}} <br>
             Headerimage: <img width = "200" src="data:image;base64,{{base64encode(page.headerimage.read())}}"> <br>
             {{page.description}} <br>
+            <a href="/page/{{page.id}}" class="btn btn-primary btn-sm" role="button">View Page</a> &nbsp;&nbsp;&nbsp;
+            <a href="/editpage/{{page.id}}" class="btn btn-primary btn-sm" role="button">Edit Page</a> &nbsp;&nbsp;&nbsp;
             <a href="/deletepage/{{page.id}}" class="btn btn-primary btn-sm" role="button">Delete Page</a> <br>
-            <a href="/page/{{page.id}}" class="btn btn-primary btn-sm" role="button">View Page</a> <br>
-
             <hr>
         {% endfor %}
+
+    {% else %}
+        <a href="/newpage" class="btn btn-primary btn-sm" role="button">New Page</a> <br>
     {% endif %}
+
 
 {% endblock %}

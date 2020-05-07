@@ -43,7 +43,7 @@ class YBook(Document):
     status = StringField()
 
 class Page(Document):
-    owner = ReferenceField('User')
+    owner = ReferenceField('User',reverse_delete_rule=CASCADE)
     # Draft, Private, Public
     status = StringField()
     # Club, Dept, Friends, ...
