@@ -2,29 +2,60 @@
 
 {% block body %}
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <img class="img-fluid" src="data:image;base64,{{base64encode(page.headerimage.read())}}"> <br>
-            <h1>{{page.title}}</h1>
-            {{page.description}} <br>
+    <div class="hicontainer"></div>
+
+        <img class="img-fluid" src="data:image;base64,{{base64encode(page.headerimage.read())}}">
+        <div class="itcentered">
+            <p class="text-center text-white display-1">{{page.title}}</p>
         </div>
+
     </div>
+    <hr>
+    {{page.description}} 
+    <hr>
     <div class="row">
         <div class="col">
     {% if page.image1 %}
         <img class="img-fluid" src="data:image;base64,{{base64encode(page.image1.read())}}"> <br>
+        <p>Caption or Sign here?</p>
     {% endif %}
     {% if page.image2 %}
         <img class="img-fluid" src="data:image;base64,{{base64encode(page.image2.read())}}"> <br>
+        <p>Caption or Sign here?</p>
     {% endif %}
         </div>
         <div class="col">
     {% if page.image3 %}
         <img class="img-fluid" src="data:image;base64,{{base64encode(page.image3.read())}}"> <br>
+        <p>Caption or Sign here?</p>
     {% endif %}
     {% if page.image4 %}
         <img class="img-fluid" src="data:image;base64,{{base64encode(page.image4.read())}}"> <br>
+        <p>Caption or Sign here?</p>
     {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p>Lorem ipsum dolor sit amet, qui case illum ne. Vix idque nostrum an. Id qui vide veniam, pri tale recusabo eu, qui ferri albucius phaedrum at. Cum illud labore torquatos ei, eu causae verterem est, pertinax eleifend mediocrem no pro.
+
+                Legimus volumus praesent sed id, ignota causae ei ius. Est oblique admodum eleifend te, at magna nonumes vim. Nostro verterem sed te, nam ut fabulas ponderum, ius aliquip officiis vivendum no. At mea alia eros accommodare, ut saperet docendi vix. Et ubique vidisse his, ei nusquam intellegam mea.
+                
+                Cu mei justo nobis numquam. At mea dicant laudem aperiri, pro ei insolens salutandi voluptatibus, et per probo mandamus. Ne vim eripuit pertinax. Omnis partem adolescens ea per, omnis causae nam ea. An usu diceret placerat praesent, mea cetero dolorem epicuri et. Duo quod unum ut, ne consetetur vituperatoribus sed.
+                
+                Ea usu conceptam sadipscing. At quem nostro oblique vix. Et his duis viris reprehendunt. Nominavi appellantur eu vix. Cu eam phaedrum perpetua, has aliquip propriae assentior et.
+                
+                Erat delenit sensibus pro no, omnes accumsan assentior vim ex. Suscipit erroribus suscipiantur in eum, sed et odio fuisset detracto. Mea at nullam copiosae evertitur, sea ea deleniti accusata hendrerit. Duo option inermis electram ei, vel saperet gubergren scribentur no. In euismod erroribus has, utroque nostrum senserit vix ut. Ponderum periculis complectitur ex sit, sed clita oblique in.
+                
+                Fugit utamur dignissim at sed, ea similique comprehensam sed. Denique appetere at pro. Mei cu dico oratio volumus, id nec augue dicta nominati. Te sint dissentiet mediocritatem qui, id dicat dicant per, atomorum partiendo eu mel. Vix errem option fastidii ex, animal efficiendi ut pri.
+                
+                Nam ad putant vivendo intellegam. Et sea justo consul maiorum. Et quo movet tempor dissentiet, vix in quot lobortis. Libris evertitur mea ne, eam tritani adipisci ei. Zril deserunt ocurreret ex vim, nulla putent qui ea, mei te populo sapientem.
+                
+                Sit ad sint putent corrumpit, quo primis quidam te. Intellegam accommodare vim ad, affert bonorum invenire eu mea. Pro eu postea eloquentiam, cu assum labore eam. Affert delenit ut eum, dicant consectetuer an usu. Regione persecuti instructior pro id. Ei vix libris fuisset, in docendi tacimates quo.
+                
+                Duo feugait deserunt ne, ut quo dicat eleifend, ne soluta mediocritatem vix. Putent malorum mea cu, ius ex reque saperet. Id brute ubique percipitur cum, eu summo facete everti est. Tation gloriatur ei nam, cum doming deleniti scaevola ne.
+                
+                Verterem deserunt convenire vel ex, id vel partem nostro, ei eam nostrum voluptaria. In affert quaeque repudiandae sed, wisi ancillae pro ea. Per suas habeo praesent id, omnes oratio elaboraret pri ex. Eu usu causae adipisci similique, viderer consulatu comprehensam eos ne. Quem esse pertinax est ea, sint error ancillae at quo. Est ferri nusquam volutpat at. Vis te salutandi scripserit, mel quis alia appareat eu.</p>
         </div>
     </div>
 </div>

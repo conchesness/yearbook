@@ -22,12 +22,12 @@ import base64
 def ybook():
     currUser = User.objects.get(gid=session['gid'])
     try:
-        pages = Page.objects(owner=currUser)
+        page = Page.objects.get(owner=currUser)
 
     except:
         pages = None
     # confirm the use is an OT Senior
-    if currUser.issenior or session['admin']:
+    if currUser.issenior or session['admin'] or session['role'] == "teacher":
         try:
             currBook = YBook.objects.get(owner = currUser)
         except:
@@ -42,7 +42,7 @@ def ybook():
         flash(f'{currUser.fname} is not a senior.  You can only make a virtual yearbook if you are a senior.')
         return redirect('/')
     
-    return render_template('ybook.html', ybook=currBook, pages=pages)
+    return render_template('ybook.html', page=page)
 
 @app.route('/editybook', methods=['GET', 'POST'])
 def editybook():
@@ -158,9 +158,7 @@ def deletepage(pageid):
 
 @app.route('/pages')
 def pages():
-    flash("Home")
-    pages = Page.objects()
-    return render_template('index.html', pages=pages)
+    return redirect(url_for('index'))
     
 
 

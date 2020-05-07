@@ -6,16 +6,16 @@
 <!--This is the home page -->
 <div class="containter">
     <div class="jumbotron text-center">
-        <h1>OT Yearbook</h1>
+        <h1>OT Senior Pages</h1>
     </div>
     <div class="row">
         <div class="col">
-        {% if pages %}
-        <h3>Pages</h3>
-            {% for page in pages %}
-                <a href="/page/{{page.id}}">{{page.owner.fname}} {{page.owner.lname}}</a>
-            {% endfor %}
-        {% endif %}
+            {% if pages %}
+            <h3>Pages</h3>
+                {% for page in pages %}
+                    <a href="/page/{{page.id}}">{{page.owner.fname}} {{page.owner.lname}}</a> <br>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

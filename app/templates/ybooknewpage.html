@@ -16,30 +16,40 @@
         {% endif %}
         {{form.headerimage()}} <br>
 
-        <b>Image 1</b> <br>
-        {% if page %}
-            <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image1.read())}}">
-        {% endif %}
-        {{form.image1()}} <br>
-
-        <b>Image 2</b> <br>
-        {% if page %}
-            <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image2.read())}}">
-        {% endif %}
-        {{form.image2()}} <br>
-
-        <b>Image 3</b><br>
-        {% if page %}
-            <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image3.read())}}">
-        {% endif %}
-        {{form.image3()}} <br>
-
-        <b>Image 4</b> <br>
-        {% if page %}
-            <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image4.read())}}">
-        {% endif %}
-        {{form.image4()}} <br> <br>
-
+        <table class="table">
+            <tr>
+                <td>
+                    <b>Image 1</b> <br>
+                    {% if page %}
+                        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image1.read())}}">
+                    {% endif %}
+                    {{form.image1()}} <br>
+                </td>
+                <td>  
+                    <b>Image 3</b><br>
+                    {% if page %}
+                        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image3.read())}}">
+                    {% endif %}
+                    {{form.image3()}} <br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Image 2</b> <br>
+                    {% if page %}
+                        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image2.read())}}">
+                    {% endif %}
+                    {{form.image1()}} <br>
+                </td>
+                <td>  
+                    <b>Image 4</b><br>
+                    {% if page %}
+                        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image4.read())}}">
+                    {% endif %}
+                    {{form.image3()}} <br>
+                </td>
+            </tr>
+        </table>
         {{form.submit()}}
     </form>
 

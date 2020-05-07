@@ -18,6 +18,13 @@ class User(Document):
     image = URLField()
     birthdate = DateField()
     personalemail = EmailField()
+    mobile = StringField()
+    address = StringField()
+    city = StringField()
+    state = StringField()
+    zipcode = IntField()
+    socmedia = StringField()
+    nextyr = StringField()
     meta = {
         'ordering': ['+lname', '+fname']
     }

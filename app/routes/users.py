@@ -2,7 +2,7 @@ from app import app
 from .scopes import *
 
 from flask import render_template, redirect, url_for, request, session, flash
-from app.classes.data import User, OTSeniors
+from app.classes.data import User, OTSeniors, Page
 from app.classes.forms import UserForm
 from .credentials import GOOGLE_CLIENT_CONFIG
 from requests_oauth2.services import GoogleClient
@@ -74,7 +74,11 @@ def before_request():
 @app.route('/home')
 @app.route('/')
 def index():
-    return render_template("index.html")
+    try:
+        pages = Page.objects(status="public")
+    except:
+        pages = None
+    return render_template("index.html", pages=pages)
 
 # a lot of stuff going on here for the user as they log in including creatin new users if this is their first login
 @app.route('/login')
