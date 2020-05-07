@@ -4,9 +4,11 @@
     <h1>Yearbook for {{ ybook.owner.fname }} {{ ybook.owner.lname }} </h1>
     Status: {{ ybook.status }} <br>
     Title: {{ ybook.title }} <br>
-    <a href="/editybook">(Edit)</a> <br>
-
+    <a href="/editybook" class="btn btn-primary btn-sm" role="button">Edit Yearbook</a> <br>
+<hr>
     <a href="/newpage" class="btn btn-primary btn-sm" role="button">New Page</a> <br>
+    <a href="/editpage/{{page.id}}">Edit Page</a> <br>
+
 
     {% if pages %}
         {% for page in pages %}
@@ -15,7 +17,7 @@
             {{page.description}} <br>
             <a href="/deletepage/{{page.id}}" class="btn btn-primary btn-sm" role="button">Delete Page</a> <br>
             <a href="/page/{{page.id}}" class="btn btn-primary btn-sm" role="button">View Page</a> <br>
-            
+
             <hr>
         {% endfor %}
     {% endif %}

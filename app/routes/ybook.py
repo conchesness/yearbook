@@ -27,7 +27,7 @@ def ybook():
     except:
         pages = None
     # confirm the use is an OT Senior
-    if currUser.issenior:
+    if currUser.issenior or session['admin']:
         try:
             currBook = YBook.objects.get(owner = currUser)
         except:
@@ -98,7 +98,7 @@ def newpage():
 
         return redirect(url_for('ybook'))
 
-    return render_template('ybooknewpage.html', form=form, ybook=currYBook)
+    return render_template('ybooknewpage.html', form=form, ybook=currYBook, page=None)
     
 @app.route('/editpage/<pageid>', methods=['GET', 'POST'])
 def editpage(pageid):
@@ -156,8 +156,12 @@ def deletepage(pageid):
     page.delete()
     return redirect(url_for('ybook'))
 
-
-
+@app.route('/pages')
+def pages():
+    flash("Home")
+    pages = Page.objects()
+    return render_template('index.html', pages=pages)
+    
 
 
 
