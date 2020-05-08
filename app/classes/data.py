@@ -67,6 +67,21 @@ class Page(Document):
     image4 = FileField()
     description = StringField()
 
+class Sign(Document):
+    owner = ReferenceField('User',reverse_delete_rule=CASCADE)
+    page = ReferenceField('Page',reverse_delete_rule=CASCADE)
+    createdate = DateTimeField(default=d.datetime.utcnow)
+    content = StringField()
+
+class Comment(Document):
+    content = StringField()
+    signature = ReferenceField('Sign',reverse_delete_rule=CASCADE)
+    owner = ReferenceField('User',reverse_delete_rule=CASCADE)
+    comment = ReferenceField('self')
+    meta = {
+        'ordering': ['+createdate']
+    }
+
 class Feedback(Document): 
     author = ReferenceField('User',reverse_delete_rule=CASCADE)
     createdate = DateTimeField(default=d.datetime.utcnow)
@@ -96,16 +111,7 @@ class Post(Document):
     }
 
 # TODO Delete/Hide Comment 
-class Comment(Document):
-    comment = StringField()
-    createdate = DateTimeField(default=d.datetime.utcnow)
-    modifydate = DateTimeField
-    post = ReferenceField('Post',reverse_delete_rule=CASCADE)
-    user = ReferenceField('User',reverse_delete_rule=CASCADE)
-    
-    meta = {
-        'ordering': ['+createdate']
-    }
+
 
 class Event(Document):
     owner = ReferenceField('User')

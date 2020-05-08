@@ -1,6 +1,6 @@
 from app import app
-from app.classes.data import YBook, Page, Contributor, User
-from app.classes.forms import YBookForm, PageForm, InviteForm, PageImgForm
+from app.classes.data import YBook, Page, Contributor, User, Sign
+from app.classes.forms import YBookForm, PageForm, InviteForm, PageImgForm, SignForm
 import datetime as dt
 from flask import render_template, redirect, url_for, request, session, flash
 from mongoengine import Q
@@ -62,12 +62,6 @@ def editybook():
     form.status.data = currYBook.status
 
     return render_template('ybookedit.html', form=form, currYBook=currYBook)
-
-@app.route('/page/<pageid>')
-def page(pageid):
-    currPage = Page.objects.get(pk = pageid)
-
-    return render_template('ybookpage.html', page = currPage)
 
 @app.route('/newpage', methods=['GET', 'POST'])
 def newpage():
@@ -156,10 +150,35 @@ def deletepage(pageid):
     page.delete()
     return redirect(url_for('ybook'))
 
-@app.route('/pages')
-def pages():
-    return redirect(url_for('index'))
-    
+@app.route('/page/<pageid>', methods=['GET', 'POST'])
+@app.route('/sign/<pageid>', methods=['GET', 'POST'])
+def sign(pageid):
+    currPage = Page.objects.get(pk=pageid)
+    form = SignForm()
+    signer = User.objects.get(pk=session['currUserId'])
+    signs = Sign.objects(page = currPage)
+
+    if form.validate_on_submit():
+        newSig = Sign(
+            owner = signer,
+            page = currPage,
+            content = form.content.data
+        )
+        newSig.save()
+
+        form = None
+
+    return render_template('ybookpage.html',page=currPage,form=form,signs=signs)
+
+# @app.route('/page/<pageid>')
+# def page(pageid):
+#     currPage = Page.objects.get(pk = pageid)
+#     try:
+#         signs = Sign.objects.get(page = currPage)
+#     except:
+#         signs = None
+
+#     return render_template('ybookpage.html', page=currPage, signs=signs)
 
 
 

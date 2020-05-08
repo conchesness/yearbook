@@ -72,6 +72,7 @@ def before_request():
 
 # This tells the app what to do if the user requests the home either via '/home' or just'/'
 @app.route('/home')
+@app.route('/pages')
 @app.route('/')
 def index():
     try:

@@ -42,13 +42,17 @@ class InviteForm(FlaskForm):
     invitemsg = TextAreaField('Message')
     submit = SubmitField("Submit")
 
-class PostForm(FlaskForm):
-    subject = StringField("Title")
-    body = TextAreaField("Body")
+class SignForm(FlaskForm):
+    content = TextAreaField("Body")
     submit = SubmitField("Submit")
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField("Comment")
+    content = TextAreaField("Comment")
+    submit = SubmitField("Submit")
+
+class PostForm(FlaskForm):
+    subject = StringField("Title")
+    body = TextAreaField("Body")
     submit = SubmitField("Submit")
 
 class EventForm(FlaskForm):
