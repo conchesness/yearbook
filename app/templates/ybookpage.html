@@ -6,7 +6,11 @@
 {% block body %}
 <div class="container">
     <div class="hicontainer">
-        <img class="img-fluid" src="data:image;base64,{{base64encode(page.headerimage.read())}}">
+        {% if page.headerimage %}
+            <img class="img-fluid" src="data:image;base64,{{base64encode(page.headerimage.read())}}">
+        {% else %}
+            No header image yet
+        {% endif %}
         <div class="itcentered">
             <p class="text-center text-white display-3">{{page.title}}</p>
         </div>
@@ -48,16 +52,23 @@
                 <a href="/sign/{{page.id}}" class="btn btn-primary btn-sm" role="button">Sign</a> <br>
             {% endif %}
             {% if signs %}
+            <table>
                 {% for sign in signs %}
-                    {% if sign.owner.image %}
-                        <img class="img-thumbnail" width="100" src="data:image;base64,{{base64encode(sign.owner.image.read())}}"> 
-                    {% else %}
-                        <img src="{{session.gdata.photos[0].url}}">
-                    {% endif %}
-                    {{sign.owner.fname}} {{sign.owner.lname}}: {{sign.content}} <br>
+                <tr>
+                    <td>
+                        {% if sign.owner.image %}
+                            <img class="img-thumbnail" width="100" src="data:image;base64,{{base64encode(sign.owner.image.read())}}"> 
+                        {% else %}
+                            <img class="img-thumbnail" width="100" src="/static/oths.jpg">
+                        {% endif %}
+                    </td>
+                    <td>
+                        <em>{{sign.owner.fname}} {{sign.owner.lname}}:</em> {{sign.content}}
+                    </td>
+                </tr>
                 {% endfor %}
+            </table>
             {% endif %}
-
         </div>
     </div>
 </div>

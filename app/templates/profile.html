@@ -9,7 +9,12 @@ via google and via the User data object-->
 <div class="containter">
     <div class="jumbotron text-center">
         <h1>Profile for {{ session['displayName'] }}</h1>
-        <img width = "200" src="data:image;base64,{{base64encode(currUser.image.read())}}">
+        {% if currUser.image %}
+            <img class="img-thumbnail" width = "200" src="data:image;base64,{{base64encode(currUser.image.read())}}">
+        {% else %}
+            <img class="img-thumbnail" width = "200" src="/static/oths.jpg">
+        {% endif %}
+
         <a class="btn btn-primary" href="/editprofile">Edit User</a>
     </div>
 
