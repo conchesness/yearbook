@@ -81,9 +81,13 @@ def newpage():
             owner = currUser,
             status = form.status.data,
             title = form.title.data,
-            description = form.description.data
+            description = form.description.data,
+            caption1 = form.caption1.data,
+            caption2 = form.caption2.data,
+            caption3 = form.caption3.data,
+            caption4 = form.caption4.data
         )
-        
+
         if form.headerimage.data:
             newPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
         if form.image1.data:
@@ -118,7 +122,11 @@ def editpage(pageid):
         editPage.update(
             status = form.status.data,
             title = form.title.data,
-            description = form.description.data
+            description = form.description.data,
+            caption1 = form.caption1.data,
+            caption2 = form.caption2.data,
+            caption3 = form.caption3.data,
+            caption4 = form.caption4.data
         )
         if form.headerimage.data and not editPage.headerimage.read():
             editPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
@@ -145,6 +153,10 @@ def editpage(pageid):
     form.image2.data = editPage.image2
     form.image3.data = editPage.image3
     form.image4.data = editPage.image4
+    form.caption1.data = editPage.caption1
+    form.caption2.data = editPage.caption2
+    form.caption3.data = editPage.caption3
+    form.caption4.data = editPage.caption4
 
     return render_template('ybooknewpage.html', form=form, ybook=currYBook, page=editPage)
 
@@ -162,7 +174,7 @@ def deletepage(pageid):
 
 @app.route('/page/<pageid>', methods=['GET', 'POST'])
 @app.route('/sign/<pageid>', methods=['GET', 'POST'])
-def sign(pageid):
+def page(pageid):
     currPage = Page.objects.get(pk=pageid)
     form = SignForm()
     signer = User.objects.get(pk=session['currUserId'])
@@ -179,6 +191,19 @@ def sign(pageid):
         form = None
 
     return render_template('ybookpage.html',page=currPage,form=form,signs=signs)
+
+@app.route('/deletesig/<sigid>/<pageid>')
+def deletesig(sigid,pageid):
+    currPage = Page.objects.get(pk=pageid)
+    currSig = Sign.objects.get(pk=sigid)
+    if str(currPage.owner.id) == str(session['currUserId']) or str(currSig.owner.id) == str(session['currUserId']):
+        currSig.delete()
+        flash('Comment was deleted')
+    else:
+        flash('You can only dlete a comment if you own the page or own the comment.')
+
+    return redirect(url_for('page',pageid=pageid))
+
 
 @app.route('/allpages')
 def allpages():

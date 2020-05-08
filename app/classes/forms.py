@@ -30,6 +30,10 @@ class PageForm(FlaskForm):
     image2 = FileField('Image 2')
     image3 = FileField('Image 3')
     image4 = FileField('Image 4')
+    caption1 = StringField('Caption for Image 1')
+    caption2 = StringField('Caption for Image 2')
+    caption3 = StringField('Caption for Image 3')
+    caption4 = StringField('Caption for Image 4')
     description = TextAreaField('Description')
     submit = SubmitField("Submit")
 

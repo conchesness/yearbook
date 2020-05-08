@@ -22,21 +22,21 @@
         <div class="col">
     {% if page.image1 %}
         <img class="img-fluid" src="data:image;base64,{{base64encode(page.image1.read())}}"> <br>
-        <p>Caption?</p>
+        <p>{{page.caption1}}</p>
     {% endif %}
     {% if page.image2 %}
         <img class="img-fluid" src="data:image;base64,{{base64encode(page.image2.read())}}"> <br>
-        <p>Caption?</p>
+        <p>{{page.caption2}}</p>
     {% endif %}
         </div>
         <div class="col">
     {% if page.image3 %}
         <img class="img-fluid" src="data:image;base64,{{base64encode(page.image3.read())}}"> <br>
-        <p>Caption?</p>
+        <p>{{page.caption3}}</p>
     {% endif %}
     {% if page.image4 %}
         <img class="img-fluid" src="data:image;base64,{{base64encode(page.image4.read())}}"> <br>
-        <p>Caption?</p>
+        <p>{{page.caption4}}</p>
     {% endif %}
         </div>
     </div>
@@ -65,6 +65,11 @@
                     <td>
                         <em>{{sign.owner.fname}} {{sign.owner.lname}}:</em> {{sign.content}}
                     </td>
+                    {% if page.owner.id|string == session.currUserId|string or sign.owner.id|string == session.currUserId|string %}
+                        <td>
+                            <a href="/deletesig/{{sign.id}}/{{page.id}}" class="btn btn-primary btn-sm" role="button">Delete</a>
+                        </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </table>

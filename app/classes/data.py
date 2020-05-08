@@ -62,9 +62,13 @@ class Page(Document):
     title = StringField()
     headerimage = FileField()
     image1 = FileField()
+    caption1 = StringField()
     image2 = FileField()
+    caption2 = StringField()
     image3 = FileField()
+    caption3 = StringField()
     image4 = FileField()
+    caption4 = StringField()
     description = StringField()
     meta = {
         'ordering': ['owner.lname']
@@ -75,6 +79,9 @@ class Sign(Document):
     page = ReferenceField('Page',reverse_delete_rule=CASCADE)
     createdate = DateTimeField(default=d.datetime.utcnow)
     content = StringField()
+    meta = {
+        'ordering': ['-createdate']
+    }
 
 class Comment(Document):
     content = StringField()

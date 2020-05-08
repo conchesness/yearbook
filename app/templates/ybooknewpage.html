@@ -24,6 +24,8 @@
                         <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image1.read())}}">
                     {% endif %}
                     {{form.image1()}} <br>
+                    <em>Caption optional</em>: <br>
+                    {{form.caption1(size="50")}}
                 </td>
                 <td>  
                     <b>Image 3</b><br>
@@ -31,6 +33,9 @@
                         <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image3.read())}}">
                     {% endif %}
                     {{form.image3()}} <br>
+                    <em>Caption optional</em>: <br>
+                    {{form.caption3(size="50")}}
+                    
                 </td>
             </tr>
             <tr>
@@ -40,6 +45,8 @@
                         <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image2.read())}}">
                     {% endif %}
                     {{form.image2()}} <br>
+                    <em>Caption optional</em>: <br>
+                    {{form.caption2(size="50")}}
                 </td>
                 <td>  
                     <b>Image 4</b><br>
@@ -47,6 +54,8 @@
                         <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image4.read())}}">
                     {% endif %}
                     {{form.image4()}} <br>
+                    <em>Caption optional</em>: <br>
+                    {{form.caption4(size="50")}}
                 </td>
             </tr>
         </table>

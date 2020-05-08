@@ -32,32 +32,44 @@
             <tr>
                 <td>
                     {% if page.image1 %}
-                        <img width = "200" src="data:image;base64,{{base64encode(page.image1.read())}}">
+                        <img width = "200" src="data:image;base64,{{base64encode(page.image1.read())}}"> <br>
                     {% else %}
-                        Image 1 Goes Here
+                        Image 1 Goes Here <br>
+                    {% endif %}
+                    {% if page.caption1 %}
+                        {{page.caption1}}
                     {% endif %}
                 </td>
                 <td>
                     {% if page.image3 %}
-                        <img width = "200" src="data:image;base64,{{base64encode(page.image3.read())}}">
+                        <img width = "200" src="data:image;base64,{{base64encode(page.image3.read())}}"> <br>
                     {% else %}
-                        Image 3 Goes Here
+                        Image 3 Goes Here <br>
+                    {% endif %}
+                    {% if page.caption3 %}
+                        {{page.caption3}}
                     {% endif %}
                 </td>
             </tr>
             <tr>
                 <td>
                     {% if page.image2 %}
-                        <img width = "200" src="data:image;base64,{{base64encode(page.image2.read())}}">
+                        <img width = "200" src="data:image;base64,{{base64encode(page.image2.read())}}"> <br>
                     {% else %}
-                        Image 2 Goes Here
+                        Image 2 Goes Here <br>
+                    {% endif %}
+                    {% if page.caption2 %}
+                        {{page.caption2}}
                     {% endif %}
                 </td>
                 <td>
                     {% if page.image4 %}
-                        <img width = "200" src="data:image;base64,{{base64encode(page.image4.read())}}">
+                        <img width = "200" src="data:image;base64,{{base64encode(page.image4.read())}}"> <br>
                     {% else %}
-                        Image 4 Goes Here
+                        Image 4 Goes Here <br>
+                    {% endif %}
+                    {% if page.caption4 %}
+                        {{page.caption4}}
                     {% endif %}
                 </td>
             </tr>
