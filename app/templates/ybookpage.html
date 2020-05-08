@@ -41,7 +41,7 @@
             {% if form %}
                 <form method=post>
                     {{ form.hidden_tag() }}
-                    {{form.content()}} <br>
+                    {{form.content(rows='3',cols='50')}} <br>
                     {{form.submit()}}
                 </form>
             {% else %}
@@ -49,6 +49,11 @@
             {% endif %}
             {% if signs %}
                 {% for sign in signs %}
+                    {% if sign.owner.image %}
+                        <img class="img-thumbnail" width="100" src="data:image;base64,{{base64encode(sign.owner.image.read())}}"> 
+                    {% else %}
+                        <img src="{{session.gdata.photos[0].url}}">
+                    {% endif %}
                     {{sign.owner.fname}} {{sign.owner.lname}}: {{sign.content}} <br>
                 {% endfor %}
             {% endif %}

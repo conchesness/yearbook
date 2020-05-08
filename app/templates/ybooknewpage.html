@@ -11,8 +11,8 @@
         Statement: <br> {{form.description(rows=6, cols=100)}} <br>
 
         <b>Header Image</b> <br>
-        {% if page %}
-            <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.headerimage.read())}}">
+        {% if page and page.headerimage %}
+            <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.headerimage.read())}}"><br>
         {% endif %}
         {{form.headerimage()}} <br>
 
@@ -20,14 +20,14 @@
             <tr>
                 <td>
                     <b>Image 1</b> <br>
-                    {% if page %}
+                    {% if page and page.image1 %}
                         <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image1.read())}}">
                     {% endif %}
                     {{form.image1()}} <br>
                 </td>
                 <td>  
                     <b>Image 3</b><br>
-                    {% if page %}
+                    {% if page and page.image3 %}
                         <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image3.read())}}">
                     {% endif %}
                     {{form.image3()}} <br>
@@ -36,17 +36,17 @@
             <tr>
                 <td>
                     <b>Image 2</b> <br>
-                    {% if page %}
+                    {% if page and page.image2 %}
                         <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image2.read())}}">
                     {% endif %}
-                    {{form.image1()}} <br>
+                    {{form.image2()}} <br>
                 </td>
                 <td>  
                     <b>Image 4</b><br>
-                    {% if page %}
+                    {% if page and page.image4 %}
                         <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.image4.read())}}">
                     {% endif %}
-                    {{form.image3()}} <br>
+                    {{form.image4()}} <br>
                 </td>
             </tr>
         </table>

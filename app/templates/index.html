@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         <div class="col">
-            {% if pages %}
+            {% if pages and 'credentials' in session %}
             <h3>Pages</h3>
                 {% for page in pages %}
                     <a href="/page/{{page.id}}">{{page.owner.fname}} {{page.owner.lname}}</a> <br>

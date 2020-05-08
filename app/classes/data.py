@@ -15,7 +15,7 @@ class User(Document):
     pronouns = StringField()
     fname = StringField()
     lname = StringField()
-    image = URLField()
+    image = FileField()
     birthdate = DateField()
     personalemail = EmailField()
     mobile = StringField()
@@ -66,6 +66,9 @@ class Page(Document):
     image3 = FileField()
     image4 = FileField()
     description = StringField()
+    meta = {
+        'ordering': ['owner.lname']
+    }
 
 class Sign(Document):
     owner = ReferenceField('User',reverse_delete_rule=CASCADE)

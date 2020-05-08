@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if pages %}
+    {% for page in pages %}
+        <a href="/page/{{page.id}}">{{page.owner.fname}} {{page.owner.lname}}</a> <br>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

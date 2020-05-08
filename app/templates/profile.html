@@ -9,7 +9,7 @@ via google and via the User data object-->
 <div class="containter">
     <div class="jumbotron text-center">
         <h1>Profile for {{ session['displayName'] }}</h1>
-        <img src="{{currUser['image']}}" alt="user image"><br>
+        <img width = "200" src="data:image;base64,{{base64encode(currUser.image.read())}}">
         <a class="btn btn-primary" href="/editprofile">Edit User</a>
     </div>
 

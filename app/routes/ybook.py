@@ -1,6 +1,6 @@
 from app import app
 from app.classes.data import YBook, Page, Contributor, User, Sign
-from app.classes.forms import YBookForm, PageForm, InviteForm, PageImgForm, SignForm
+from app.classes.forms import YBookForm, PageForm, InviteForm, SignForm
 import datetime as dt
 from flask import render_template, redirect, url_for, request, session, flash
 from mongoengine import Q
@@ -23,9 +23,9 @@ def ybook():
     currUser = User.objects.get(gid=session['gid'])
     try:
         page = Page.objects.get(owner=currUser)
-
     except:
-        pages = None
+        page = None
+
     # confirm the use is an OT Senior
     if currUser.issenior or session['admin'] or session['role'] == "teacher":
         try:
@@ -83,11 +83,17 @@ def newpage():
             title = form.title.data,
             description = form.description.data
         )
-        newPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
-        newPage.image1.put(form.image1.data, content_type = 'image/jpeg')
-        newPage.image2.put(form.image2.data, content_type = 'image/jpeg')
-        newPage.image3.put(form.image3.data, content_type = 'image/jpeg')
-        newPage.image4.put(form.image4.data, content_type = 'image/jpeg')
+        
+        if form.headerimage.data:
+            newPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
+        if form.image1.data:
+            newPage.image1.put(form.image1.data, content_type = 'image/jpeg')
+        if form.image2.data:
+            newPage.image2.put(form.image2.data, content_type = 'image/jpeg')
+        if form.image3.data:
+            newPage.image3.put(form.image3.data, content_type = 'image/jpeg')
+        if form.image4.data:
+            newPage.image4.put(form.image4.data, content_type = 'image/jpeg')
         newPage.save()
 
         return redirect(url_for('ybook'))
@@ -114,8 +120,11 @@ def editpage(pageid):
             title = form.title.data,
             description = form.description.data
         )
-        if form.headerimage.data:
+        if form.headerimage.data and not editPage.headerimage.read():
+            editPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
+        elif form.headerimage.data and editPage.headerimage.read():
             editPage.headerimage.replace(form.headerimage.data, content_type = 'image/jpeg')
+
         if form.image1.data:
             editPage.image1.replace(form.image1.data, content_type = 'image/jpeg')
         if form.image2.data:
@@ -127,6 +136,7 @@ def editpage(pageid):
         editPage.save()
 
         return redirect(url_for('ybook'))
+
     form.status.data = editPage.status
     #form.category.data = editPage.category
     form.title.data = editPage.title
@@ -170,15 +180,16 @@ def sign(pageid):
 
     return render_template('ybookpage.html',page=currPage,form=form,signs=signs)
 
-# @app.route('/page/<pageid>')
-# def page(pageid):
-#     currPage = Page.objects.get(pk = pageid)
-#     try:
-#         signs = Sign.objects.get(page = currPage)
-#     except:
-#         signs = None
+@app.route('/allpages')
+def allpages():
+    if not session['admin']:
+        flash('You can only see all pages if you are an admin.')
+        return redirect("/")
+    
+    try:
+        pages = Page.objects()
+    except:
+        pages = None
 
-#     return render_template('ybookpage.html', page=currPage, signs=signs)
-
-
+    return render_template('ybookpages.html.j2',pages=pages)
 

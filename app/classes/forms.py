@@ -10,7 +10,7 @@ class UserForm(FlaskForm):
     fname = StringField("First Name")
     lname = StringField("Last Name")
     pronouns = SelectField(choices=[('He/Him', 'He/Him'),('She/Her','She/Her'),('They/Them','They/Them'),('Any/All','Any/All')])
-    image = URLField('Image URL', validators=[url()])
+    image = FileField('Avatar')
     birthdate = DateField()
     personalemail = EmailField('Personal Email',validators=[Optional(),Email()])
     submit = SubmitField("Submit")
@@ -31,10 +31,6 @@ class PageForm(FlaskForm):
     image3 = FileField('Image 3')
     image4 = FileField('Image 4')
     description = TextAreaField('Description')
-    submit = SubmitField("Submit")
-
-class PageImgForm(FlaskForm):
-    image = FileField('Image')
     submit = SubmitField("Submit")
 
 class InviteForm(FlaskForm):

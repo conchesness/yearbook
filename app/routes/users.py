@@ -129,8 +129,8 @@ def login():
                         fname=data['names'][0]['givenName'], 
                         lname=data['names'][0]['familyName'],
                         email=data['emailAddresses'][0]['value'],
-                        image=data['photos'][0]['url'],
-                        role=role                       )
+                        role=role                       
+                    )
         newUser.save()
         # Are they a senior
         if newUser.role == 'student':
@@ -194,9 +194,15 @@ def editprofile():
             fname = form.fname.data,
             lname = form.lname.data,
             pronouns = form.pronouns.data,
-            image = form.image.data,
             birthdate = form.birthdate.data
         )
+        print('valid form')
+        if form.image.data:
+            print('image data in form')
+            print(editUser.image.delete())
+            editUser.image.delete()
+            editUser.image.put(form.image.data, content_type = 'image/jpeg')
+            editUser.save()
 
         # after the profile is updated, send the user to the profile page
         return redirect(url_for('profile'))
@@ -212,7 +218,7 @@ def editprofile():
     form.birthdate.data = editUser.birthdate
 
     # render the editprofile template and send the pre-populated form object.
-    return render_template('editprofile.html', form=form)
+    return render_template('editprofile.html', form=form, currUser=editUser)
     
 #######################################################################################
 ### THE CODE BELOW IS ALL GOOGLE AUTHENTICATION CODE AND PROBABLY SHOULD NOT BE TOUCHED

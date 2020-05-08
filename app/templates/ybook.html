@@ -19,19 +19,47 @@
             </tr>
             <tr>
                 <td colspan="2">
+                    {% if page.headerimage %}
                     <img width = "400" src="data:image;base64,{{base64encode(page.headerimage.read())}}">
+                    {% else %}
+                        Heder Image Goes Here
+                    {% endif %}
                 </td>
             </tr>
             <tr>
                 <td colspan="2">{{page.description}}</td>
             </tr>
             <tr>
-                <td><img width = "200" src="data:image;base64,{{base64encode(page.image1.read())}}"></td>
-                <td><img width = "200" src="data:image;base64,{{base64encode(page.image3.read())}}"></td>
+                <td>
+                    {% if page.image1 %}
+                        <img width = "200" src="data:image;base64,{{base64encode(page.image1.read())}}">
+                    {% else %}
+                        Image 1 Goes Here
+                    {% endif %}
+                </td>
+                <td>
+                    {% if page.image3 %}
+                        <img width = "200" src="data:image;base64,{{base64encode(page.image3.read())}}">
+                    {% else %}
+                        Image 3 Goes Here
+                    {% endif %}
+                </td>
             </tr>
             <tr>
-                <td><img width = "200" src="data:image;base64,{{base64encode(page.image2.read())}}"></td>
-                <td><img width = "200" src="data:image;base64,{{base64encode(page.image4.read())}}"></td>
+                <td>
+                    {% if page.image2 %}
+                        <img width = "200" src="data:image;base64,{{base64encode(page.image2.read())}}">
+                    {% else %}
+                        Image 2 Goes Here
+                    {% endif %}
+                </td>
+                <td>
+                    {% if page.image4 %}
+                        <img width = "200" src="data:image;base64,{{base64encode(page.image4.read())}}">
+                    {% else %}
+                        Image 4 Goes Here
+                    {% endif %}
+                </td>
             </tr>
         </table>
             <hr>
