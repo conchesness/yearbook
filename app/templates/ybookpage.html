@@ -54,23 +54,53 @@
             {% if signs %}
             <table>
                 {% for sign in signs %}
-                <tr>
-                    <td>
-                        {% if sign.owner.image %}
-                            <img class="img-thumbnail" width="100" src="data:image;base64,{{base64encode(sign.owner.image.read())}}"> 
-                        {% else %}
-                            <img class="img-thumbnail" width="100" src="/static/oths.jpg">
-                        {% endif %}
-                    </td>
-                    <td>
-                        <em>{{sign.owner.fname}} {{sign.owner.lname}}:</em> {{sign.content}}
-                    </td>
-                    {% if page.owner.id|string == session.currUserId|string or sign.owner.id|string == session.currUserId|string %}
-                        <td>
-                            <a href="/deletesig/{{sign.id}}/{{page.id}}" class="btn btn-primary btn-sm" role="button">Delete</a>
-                        </td>
+                    {% if not loop.index % 2 == 0 %}
+
+                        <tr align = "left">
+                            <td>
+                                {% if sign.owner.image %}
+                                    <img class="img-thumbnail" width="100" src="data:image;base64,{{base64encode(sign.owner.image.read())}}"> 
+                                {% else %}
+                                    <img class="img-thumbnail" width="100" src="/static/oths.jpg">
+                                {% endif %}
+                            </td>
+                            <td>
+                                <em>{{sign.owner.fname}} {{sign.owner.lname}}:</em> {{sign.content}}
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                {% if page.owner.id|string == session.currUserId|string or sign.owner.id|string == session.currUserId|string %}                                
+                                    <a href="/deletesig/{{sign.id}}/{{page.id}}" class="btn btn-primary btn-sm" role="button">Delete</a>                                
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                    {% else %}
+
+                        <tr align="right">
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                <em>{{sign.owner.fname}} {{sign.owner.lname}}:</em> {{sign.content}}
+                            </td>
+                            <td>
+                                {% if sign.owner.image %}
+                                    <img class="img-thumbnail" width="100" src="data:image;base64,{{base64encode(sign.owner.image.read())}}"> 
+                                {% else %}
+                                    <img class="img-thumbnail" width="100" src="/static/oths.jpg">
+                                {% endif %}
+                            </td>
+                            {% if page.owner.id|string == session.currUserId|string or sign.owner.id|string == session.currUserId|string %}
+                                <td>
+                                    <a href="/deletesig/{{sign.id}}/{{page.id}}" class="btn btn-primary btn-sm" role="button">Delete</a>
+                                </td>
+                            {% endif %}
+                        </tr>
                     {% endif %}
-                </tr>
+
                 {% endfor %}
             </table>
             {% endif %}

@@ -187,8 +187,7 @@ def page(pageid):
             content = form.content.data
         )
         newSig.save()
-
-        form = None
+        form.content.data = ""
 
     return render_template('ybookpage.html',page=currPage,form=form,signs=signs)
 
