@@ -13,6 +13,13 @@ class UserForm(FlaskForm):
     image = FileField('Avatar')
     birthdate = DateField()
     personalemail = EmailField('Personal Email',validators=[Optional(),Email()])
+    mobile = StringField()
+    address = TextAreaField()
+    city = StringField()
+    state = StringField()
+    zipcode = IntegerField()
+    socmedia = TextAreaField()
+    nextyr = TextAreaField()
     submit = SubmitField("Submit")
 
 class YBookForm(FlaskForm):
@@ -35,6 +42,7 @@ class PageForm(FlaskForm):
     caption3 = StringField('Caption for Image 3')
     caption4 = StringField('Caption for Image 4')
     description = TextAreaField('Description')
+    invitetxt = TextAreaField('Comma separated list of email addresses:')
     submit = SubmitField("Submit")
 
 class InviteForm(FlaskForm):

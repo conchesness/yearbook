@@ -42,14 +42,19 @@
     </div>
     <div class="row here">
         <div class="col">
-            {% if form %}
-                <form method=post>
-                    {{ form.hidden_tag() }}
-                    {{form.content(rows='3',cols='50')}} <br>
-                    {{form.submit()}}
-                </form>
+            {% if session.gdata.emailAddresses[0].value in page.invitelist %}
+                {% if form %}
+                    <form method=post>
+                        {{ form.hidden_tag() }}
+                        Sign the page: <br>
+                        {{form.content(rows='3',cols='50')}} <br>
+                        {{form.submit()}}
+                    </form>
+                {% else %}
+                    <a href="/sign/{{page.id}}" class="btn btn-primary btn-sm" role="button">Sign</a> <br>
+                {% endif %}
             {% else %}
-                <a href="/sign/{{page.id}}" class="btn btn-primary btn-sm" role="button">Sign</a> <br>
+                <a href="#" class="btn btn-primary btn-sm" role="button">Ask to sign</a>
             {% endif %}
             {% if signs %}
             <table>

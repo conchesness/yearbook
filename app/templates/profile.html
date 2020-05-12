@@ -18,7 +18,16 @@ via google and via the User data object-->
         <a class="btn btn-primary" href="/editprofile">Edit User</a>
     </div>
 
-    <div>
+    {{currUser.pronouns}} {{currUser.fname}} {{currUser.lname}} <br>
+    Personal Email: {{currUser.personalemail}} mobile: {{currUser.mobile}} <br>
+    Birthdate: {{currUser.birthdate}} <br>
+    Social Media: {{currUser.socmedia}} <br>
+    {{currUser.address}} <br>
+    {{currUser.city}} {{currUser.state}} {{currUser.zipcode}} <br>
+    Next Year: {{currUser.nextyr}}
+
+    {% if session.devenv  %}
+    <div class="container">
         <h3>The User Object from this site</h3>
         <table class="table">
         {% for item in currUser %}
@@ -47,6 +56,7 @@ via google and via the User data object-->
         </table>
         
     </div>
+    {% endif %} <!--Dev Env Data-->
     <br><br><br>
 </div>
 

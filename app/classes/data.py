@@ -25,6 +25,7 @@ class User(Document):
     zipcode = IntField()
     socmedia = StringField()
     nextyr = StringField()
+    invitelist = ListField()
     meta = {
         'ordering': ['+lname', '+fname']
     }
@@ -70,6 +71,7 @@ class Page(Document):
     image4 = FileField()
     caption4 = StringField()
     description = StringField()
+    invitelist = ListField()
     meta = {
         'ordering': ['owner.lname']
     }

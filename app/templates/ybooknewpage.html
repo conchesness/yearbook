@@ -6,17 +6,42 @@
     {% endfor %}
 
     <form method=post enctype="multipart/form-data">
-        {{ form.hidden_tag() }}{{form.title.label}}: {{form.title(size = '50')}} <br>
-        {{form.status.label}}: {{form.status()}} <br>
-        Statement: <br> {{form.description(rows=6, cols=100)}} <br>
-
-        <b>Header Image</b> <br>
-        {% if page and page.headerimage %}
-            <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.headerimage.read())}}"><br>
-        {% endif %}
-        {{form.headerimage()}} <br>
-
+        {{ form.hidden_tag() }}
         <table class="table">
+            <tr>
+                <td colspan="2">
+                    {{form.title.label}}: {{form.title(size = '50')}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan = 2>
+                    {{form.status.label}}: {{form.status()}}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    Who would you like to invite to sign your page <br> 
+                    Make a comma separated list -->
+                </td>
+                <td>
+                    {{form.invitetxt(cols="75")}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Statement: <br> {{form.description(rows=6, cols=100)}}
+                </td>
+            </tr>
+        
+            <tr>
+                <td colspan="2">
+                    <b>Header Image</b> <br>
+                    {% if page and page.headerimage %}
+                        <img class="img-thumbnail" width="200" src="data:image;base64,{{base64encode(page.headerimage.read())}}"><br>
+                    {% endif %}
+                    {{form.headerimage()}}
+                </td>
+            </tr>
             <tr>
                 <td>
                     <b>Image 1</b> <br>
@@ -58,8 +83,10 @@
                     {{form.caption4(size="50")}}
                 </td>
             </tr>
-        </table>
-        {{form.submit()}}
+            <tr><td colspan="2">{{form.submit()}}</td></tr>
+        
+
+    </table>
     </form>
 
 {% endblock %}

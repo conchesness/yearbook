@@ -19,6 +19,11 @@
             </tr>
             <tr>
                 <td colspan="2">
+                    Invite list: {{page.invitelist}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
                     {% if page.headerimage %}
                     <img width = "400" src="data:image;base64,{{base64encode(page.headerimage.read())}}">
                     {% else %}

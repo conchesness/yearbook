@@ -118,6 +118,9 @@ def editpage(pageid):
     form = PageForm()
 
     if form.validate_on_submit():
+        invitetxt = form.invitetxt.data.strip(", ")
+        invitetxt = invitetxt.replace(" ", "")
+        invitelist = invitetxt.split(",")
 
         editPage.update(
             status = form.status.data,
@@ -126,7 +129,8 @@ def editpage(pageid):
             caption1 = form.caption1.data,
             caption2 = form.caption2.data,
             caption3 = form.caption3.data,
-            caption4 = form.caption4.data
+            caption4 = form.caption4.data,
+            invitelist = invitelist
         )
         if form.headerimage.data and not editPage.headerimage.read():
             editPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
@@ -145,6 +149,11 @@ def editpage(pageid):
 
         return redirect(url_for('ybook'))
 
+    invitetxt = ""
+    for email in editPage.invitelist:
+        email = email.strip()
+        invitetxt = invitetxt + email + ","
+
     form.status.data = editPage.status
     #form.category.data = editPage.category
     form.title.data = editPage.title
@@ -157,6 +166,7 @@ def editpage(pageid):
     form.caption2.data = editPage.caption2
     form.caption3.data = editPage.caption3
     form.caption4.data = editPage.caption4
+    form.invitetxt.data = invitetxt
 
     return render_template('ybooknewpage.html', form=form, ybook=currYBook, page=editPage)
 
