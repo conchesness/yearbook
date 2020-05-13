@@ -6,6 +6,7 @@ import os
 if __name__ == "__main__":
     
     # This line is a way to not use https. leave it commented out unless you have a problem
+    # you need https to use the google login api
     # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
     os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
     # This line lets you run using a fake version of https for a local computer 

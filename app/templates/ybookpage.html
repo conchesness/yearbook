@@ -42,7 +42,7 @@
     </div>
     <div class="row here">
         <div class="col">
-            {% if session.gdata.emailAddresses[0].value in page.invitelist %}
+            {% if session.gdata.emailAddresses[0].value in page.invitelist or page.status == "public" %}
                 {% if form %}
                     <form method=post>
                         {{ form.hidden_tag() }}

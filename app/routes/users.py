@@ -18,7 +18,7 @@ import os
 
 
 # List of email addresses for Admin users
-admins = ['stephen.wright@ousd.org','sara.ketcham@ousd.org', 's_annettechau.tran@ousd.org', 'akbarpasha@gmail.com','s_ashly.benitez@ousd.org','s_annabella.ricucci@ousd.org ']
+admins = ['akbarpasha@gmail.com', 'steve@conches.org', 'stephen.wright@ousd.org']
 
 # This code is run right after the app starts up and then not again. It defines a few universal things
 # like is the app being run on a local computer and what is the local timezone
@@ -60,10 +60,8 @@ def before_request():
     # this sends users back to authorization if the login has timed out or other similar stuff
     if request.path not in unauthPaths:
         if 'credentials' not in session:
-            flash('No credentials in your session. Adding them now.')
             return redirect(url_for('authorize'))
         if not google.oauth2.credentials.Credentials(**session['credentials']).valid:
-            flash('Your credentials are not valid with Google Oauth. Re-authorizing now.')
             return redirect(url_for('authorize'))
         else:
             # refresh the session credentials
@@ -76,7 +74,7 @@ def before_request():
 @app.route('/')
 def index():
     try:
-        pages = Page.objects(status="public")
+        pages = Page.objects(status__ne = "draft")
     except:
         pages = None
     return render_template("index.html", pages=pages)
@@ -89,7 +87,6 @@ def login():
     # That is where the user is sent if their credentials are not currently stored in the session.  More about sessions below. 
     if 'credentials' not in session:
         # send a msg to the user
-        flash('From /login - No credentials in your session. Adding them now.')
         # send the user to get authenticated by google
         return redirect(url_for('authorize'))
 
@@ -101,11 +98,24 @@ def login():
     # information displayed via the current profile template
     data = people_service.people().get(resourceName='people/me', personFields='names,emailAddresses,photos').execute()
 
-    # get the google email address from the data object and check to see if the user has an ousd email account.  
-    # Deny access if they do not
-    # if not data['emailAddresses'][0]['value'][-8:] == "ousd.org":
-    #     flash('You must have an ousd.org email address to access this site')
-    #     return redirect(url_for('logout'))
+    try:
+        issenior = OTSeniors.objects.get(ousdemail = data['emailAddresses'][0]['value'])
+        issenior = True
+    except:
+        issenior = False
+
+    if data['emailAddresses'][0]['value'][-8:] == "ousd.org" and not data['emailAddresses'][0]['value'][0:2] == "s_":
+        isteacher = True
+    else:
+        isteacher = False
+
+    if data['emailAddresses'][0]['value'] in admins:
+        isadmin = True
+    else:
+        isadmin = False
+
+    if not isteacher and not isadmin and not issenior:
+        return redirect(url_for('revoke'))
 
     try:
         # see if the user already exists in the user database document. If they don't then this attempt
@@ -309,7 +319,6 @@ def revoke():
     if google.oauth2.credentials.Credentials(**session['credentials']).valid:
         credentials = google.oauth2.credentials.Credentials(**session['credentials'])
     else:
-        flash('Your current session credentials are not valid. I need to log you back in so that you can access your authorization to revoke it.')
         return redirect('authorize')
 
     revoke = requests.post('https://accounts.google.com/o/oauth2/revoke',
