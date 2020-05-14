@@ -6,12 +6,21 @@
 <!--This is the home page -->
 <div class="containter">
     <div class="jumbotron text-center">
-        <h1>OT Senior Pages</h1>
-        This is a site for Seniors at Oakland Technical High School <br>
-        You can only access this site if you have an OUSD.org email address <br>
-        {% if session['issenior'] or session['role'] == "teacher" or session['isadmin'] %}
-        <mark>Seniors: <b><a href="/editprofile">edit your profile</a>!</b> You can upload an avatar and let everyone know how to find you next year!</mark>
-
+        <div class="row">
+            <div class="col">
+                <h1>OT Senior Pages</h1>
+                {% if not session['issenior'] and session['role'] != "teacher" and not session['isadmin'] %}
+                This is a site for Seniors at Oakland Technical High School <br>
+                You can only access this site if you have an OUSD.org email address <br>
+                {% endif %}
+                {% if session['issenior'] or session['role'] == "teacher" or session['isadmin'] %}
+                <a href="/editprofile" class="btn btn-info btn-lg" role="button">Edit your profile</a> &nbsp; &nbsp; &nbsp; 
+                <a href="/ybook" class="btn btn-info btn-lg" role="button">Edit Your Senior Page</a>
+            </div>
+            <div class="col">
+                <h1>Announcements</h1>(Coming Soon)
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col">

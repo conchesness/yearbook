@@ -42,7 +42,7 @@ def ybook():
         flash(f'{currUser.fname} is not a senior.  You can only make a virtual yearbook if you are a senior.')
         return redirect('/')
     
-    return render_template('ybook.html', page=page)
+    return render_template('ybook.html', page=page, currUser=currUser)
 
 @app.route('/editybook', methods=['GET', 'POST'])
 def editybook():

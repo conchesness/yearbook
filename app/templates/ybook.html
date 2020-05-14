@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<h3>
+    {% if currUser.avatar %}
+        <img class="img-thumbnail" width="50" src="data:image;base64,{{base64encode(page.owner.image.read())}}">
+    {% else %}
+        <img class="img-thumbnail" width="50" src="/static/oths.jpg">
+    {% endif %}
+    {{currUser.fname}} {{currUser.lname}} <a href="/editprofile" class="btn btn-info btn-sm" role="button">Edit your Profile</a> 
+</h3>
 
     {% if page %}
         <table class="table">
@@ -92,7 +100,7 @@
         </table>
             <hr>
     {% else %}
-        <a href="/newpage" class="btn btn-primary btn-sm" role="button">New Page</a> <br>
+        <a href="/newpage" class="btn btn-info btn-lg" role="button">New Page</a> <br>
     {% endif %}
 
 
