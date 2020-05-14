@@ -21,7 +21,7 @@
                 <h1>Announcements</h1>
                 {% if announcement %}
                     <b>{{announcement.subject}}</b><br>
-                    {{announceBody}}
+                    <small>{{announceBody}}</small>
                 {% else %}
                     (No Announcements)
                 {% endif %}
