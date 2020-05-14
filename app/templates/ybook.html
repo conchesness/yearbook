@@ -22,6 +22,17 @@
                     Invite list: {{page.invitelist}}
                 </td>
             </tr>
+            {% if page.signreqs %}
+            <tr>
+                <td>
+                    Requests to Sign: <br>
+                    To add them to your invite list just copy the email address from here to the Invitelist above
+                    {% for req in page.signreqs%}
+                        {{req.fname}} {{req.lname}} {{req.email}} <br>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endif %}
             <tr>
                 <td colspan="2">
                     {% if page.headerimage %}

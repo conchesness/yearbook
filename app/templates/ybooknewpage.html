@@ -32,6 +32,16 @@
             </tr>
             <tr>
                 <td colspan="2">
+                    {% if page.signreqs %}
+                    To invite someone to sign just copy their email address from here and add it to your invite list <br>
+                    {% for req in page.signreqs %}
+                        {{loop.index}}: {{req.fname}} {{req.lname}}: {{req.email}} <br>
+                    {% endfor %}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
                     Statement: <br> {{form.description(rows=6, cols=100)}}
                 </td>
             </tr>

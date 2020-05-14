@@ -161,7 +161,7 @@ def login():
             currUser.update(admin=False)
 
     try:
-        issenior = OTSeniors.objects.get(ousdemail = email)
+        issenior = OTSeniors.objects.get(ousdemail = currUser.email)
         if currUser.issenior == False:
             currUser.update(issenior = True, aeriesid = issenior.aeriesid)
     except:
