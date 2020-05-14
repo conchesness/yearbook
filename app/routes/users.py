@@ -7,6 +7,7 @@ from app.classes.forms import UserForm
 from .credentials import GOOGLE_CLIENT_CONFIG
 from requests_oauth2.services import GoogleClient
 from requests_oauth2 import OAuth2BearerToken
+from mongoengine import Q
 import requests
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
@@ -74,7 +75,7 @@ def before_request():
 @app.route('/')
 def index():
     try:
-        pages = Page.objects(status__ne = "draft")
+        pages = Page.objects(Q(status__ne = "draft"))
     except:
         pages = None
     return render_template("index.html", pages=pages)

@@ -8,11 +8,14 @@
     <div class="jumbotron text-center">
         <h1>OT Senior Pages</h1>
         This is a site for Seniors at Oakland Technical High School <br>
-        You can only access this site if you have an OUSD.org email address
+        You can only access this site if you have an OUSD.org email address <br>
+        {% if session['issenior'] or session['role'] == "teacher" or session['isadmin'] %}
+        <mark>Seniors: <b><a href="/editprofile">edit your profile</a>!</b> You can upload an avatar and let everyone know how to find you next year!</mark>
+
     </div>
     <div class="row">
         <div class="col">
-            {% if pages and 'credentials' in session %}
+            {% if pages %}
             <h3>Pages</h3>
             <table>
                 {% for page in pages | sort(attribute='owner.glname') %}
@@ -20,6 +23,8 @@
                     <td>
                         {% if page.owner.image %}
                             <img class="img-thumbnail" width="50" src="data:image;base64,{{base64encode(page.owner.image.read())}}">
+                        {% else %}
+                            <img class="img-thumbnail" width="50" src="/static/oths.jpg">
                         {% endif %}
                         &nbsp;
                     </td>
@@ -29,6 +34,7 @@
                 </tr>
                 {% endfor %}
             </table>
+            {% endif %}
             {% endif %}
         </div>
     </div>

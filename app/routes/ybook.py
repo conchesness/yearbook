@@ -114,6 +114,9 @@ def editpage(pageid):
     if not currUser.issenior:
         flash(f'You can only create pages if you are a senior.')
         return redirect('/')
+
+    # TODO Synch invite list and sign req list
+    # TODO Add signers to signers list
     
     form = PageForm()
 
