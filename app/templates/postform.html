@@ -4,10 +4,7 @@
 
         <div class="containter">
             <div class="jumbotron text-center">
-                <h3>New Post</h3>
-                {% if job %}
-                    About this Job:<br> {{job.title}}<br>{{job.desc}}
-                {% endif %}
+                <h3>New Announcement</h3>
             </div>
 
             {% for field in form.errors %}
@@ -24,7 +21,7 @@
                     that were set by the routes code, then it will be editing.  If they are empty it 
                     will create a new secion. -->
                 <tr><td>{{ form.hidden_tag() }}{{ form.subject.label }}</td><td>{{ form.subject() }}</td></tr>
-                <tr><td>{{ form.body.label }}</td><td>{{ form.body() }}</td></tr>
+                <tr><td>{{ form.body.label }}</td><td>{{ form.body(rows="6", cols="75") }}</td></tr>
                 <tr><td colspan="2">{{form.submit()}}</td></tr>
                 </table>
             </form>

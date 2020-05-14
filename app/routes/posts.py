@@ -7,7 +7,7 @@
 # thorough comments.
 
 from app import app
-from flask import render_template, redirect, url_for, request, session, flash
+from flask import render_template, redirect, url_for, request, session, flash, Markup
 from app.classes.data import Post, Comment, Feedback
 from app.classes.forms import PostForm, CommentForm
 from requests_oauth2.services import GoogleClient
@@ -24,10 +24,15 @@ def posts():
 
 @app.route('/post/<postId>')
 def post(postId):
-  
-    post = Post.objects.get(pk=postId)
-    comments = Comment.objects(post=postId)
-    return render_template('post.html',post=post,comments=comments)
+
+    try:
+        announcement = Post.objects.get(pk=postId)
+        announceBody = Markup(announcement.body)
+    except:
+        announcement = None
+        announceBody = None
+
+    return render_template('post.html',announcement=announcement, announceBody=announceBody )
 
 @app.route('/newcomment/<postId>', methods=['GET', 'POST'])
 def newcomment(postId):
@@ -56,21 +61,13 @@ def deletecomment(postId, commentId):
         flash("You can't delete the comment because you don't own it.")
     return redirect('/post/'+postId)
 
-@app.route('/feedbackpost/<feedbackid>', methods=['GET', 'POST'])
-@app.route('/jobq/<jobid>', methods=['GET', 'POST'])
 @app.route('/newpost', methods=['GET', 'POST'])
-def newpost(jobid="none",feedbackid="none"):
+def newpost():
+    if not session['admin']:
+        flash('You must be an administrator to post an annoucement.')
+        return redirect('/')
 
     form = PostForm()
-
-    if not jobid == "none":
-        postJob = Job.objects.get(pk=jobid)
-    else:
-        postJob = None
-    if not feedbackid == "none":
-        feedbackJob = Feedback.objects.get(pk=feedbackid)
-    else:
-        feedbackJob = None
 
     if form.validate_on_submit():
         newPost = Post(
@@ -79,17 +76,11 @@ def newpost(jobid="none",feedbackid="none"):
             user=ObjectId(session['currUserId'])
         )
         newPost.save()
-        newPost.reload()
 
-        if not jobid == 'none':
-            newPost.update(job = ObjectId(jobid))
-        if not feedbackid == 'none':
-            newPost.update(feedback = ObjectId(feedbackid))
-
-        return render_template('post.html',post=newPost, job=postJob, feedback=feedbackJob)
+        return redirect(url_for('post.html',postId=newPost.id))
 
     flash('Fill out the form to create a new post')
-    return render_template('postform.html', form=form, job=postJob, feedback=feedbackJob)
+    return render_template('postform.html', form=form)
 
 @app.route('/editpost/<postId>', methods=['GET', 'POST'])
 def editpost(postId):
@@ -105,7 +96,7 @@ def editpost(postId):
             )
             editPost.reload()
             flash('The post has been edited.')
-            return render_template('post.html', post=editPost)
+            return redirect(url_for('post',postId=editPost.id))
         flash('Change the fields below to edit your post')
         form.subject.data = editPost.subject
         form.body.data = editPost.body
@@ -113,7 +104,7 @@ def editpost(postId):
         return render_template('postform.html', form=form)
     else:
         flash("You can't edit this post because you are not the author.")
-        return redirect('/post/'+postId)
+        return redirect(url_for('post', postId=postId))
 
 @app.route('/deletepost/<postId>')
 def deletepost(postId):

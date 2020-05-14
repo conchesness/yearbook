@@ -1,8 +1,8 @@
 from app import app
 from .scopes import *
 
-from flask import render_template, redirect, url_for, request, session, flash
-from app.classes.data import User, OTSeniors, Page
+from flask import render_template, redirect, url_for, request, session, flash, Markup
+from app.classes.data import User, OTSeniors, Page, Post
 from app.classes.forms import UserForm
 from .credentials import GOOGLE_CLIENT_CONFIG
 from requests_oauth2.services import GoogleClient
@@ -78,7 +78,15 @@ def index():
         pages = Page.objects(Q(status__ne = "draft"))
     except:
         pages = None
-    return render_template("index.html", pages=pages)
+
+    try:
+        announcement = Post.objects.first()
+        announceBody = Markup(announcement.body)
+    except:
+        announcement = None
+
+    return render_template("index.html", pages=pages, announceBody=announceBody, announcement=announcement)
+
 
 # a lot of stuff going on here for the user as they log in including creatin new users if this is their first login
 @app.route('/login')
@@ -175,7 +183,7 @@ def login():
     # this stores the entire Google Data object in the session
     session['gdata'] = data
     session['role'] = currUser.role
-    session['admin'] = currUser.role
+    session['admin'] = currUser.admin
     session['issenior'] = currUser.issenior
     # The return_URL value is set above in the before_request route. This enables a user you is redirected to login to
     # be able to be returned to the page they originally asked for.
