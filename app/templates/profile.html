@@ -8,7 +8,7 @@ via google and via the User data object-->
 
 <div class="containter">
     <div class="jumbotron text-center">
-        <h1>Profile for {{ session['displayName'] }}</h1>
+        <h1>Profile for {{currUser.fname}} {{currUser.lname}} ({{ currUser.pronouns }})</h1>
         {% if currUser.image %}
             <img class="img-thumbnail" width = "200" src="data:image;base64,{{base64encode(currUser.image.read())}}">
         {% else %}
@@ -18,13 +18,6 @@ via google and via the User data object-->
         <a class="btn btn-primary" href="/editprofile">Edit User</a>
     </div>
 
-    {{currUser.pronouns}} {{currUser.fname}} {{currUser.lname}} <br>
-    Personal Email: {{currUser.personalemail}} mobile: {{currUser.mobile}} <br>
-    Birthdate: {{currUser.birthdate}} <br>
-    Social Media: {{currUser.socmedia}} <br>
-    {{currUser.address}} <br>
-    {{currUser.city}} {{currUser.state}} {{currUser.zipcode}} <br>
-    Next Year: {{currUser.nextyr}}
 
     {% if session.devenv  %}
     <div class="container">

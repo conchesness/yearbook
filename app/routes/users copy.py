@@ -221,6 +221,15 @@ def editprofile():
             fname = form.fname.data,
             lname = form.lname.data,
             pronouns = form.pronouns.data,
+            birthdate = form.birthdate.data,
+            personalemail = form.personalemail.data,
+            mobile = form.mobile.data,
+            address = form.address.data,
+            city = form.city.data,
+            state = form.state.data,
+            zipcode = form.zipcode.data,
+            socmedia = form.socmedia.data,
+            nextyr = form.nextyr.data
         )
         print('valid form')
         if form.image.data:
@@ -241,6 +250,15 @@ def editprofile():
     form.lname.data = editUser.lname
     form.pronouns.data = editUser.pronouns
     form.image.data = editUser.image
+    form.birthdate.data = editUser.birthdate
+    form.personalemail.data = editUser.personalemail
+    form.mobile.data = editUser.mobile
+    form.address.data = editUser.address
+    form.city.data = editUser.city
+    form.state.data = editUser.state
+    form.zipcode.data = editUser.zipcode
+    form.socmedia.data = editUser.socmedia
+    form.nextyr.data = editUser.nextyr
 
     # render the editprofile template and send the pre-populated form object.
     return render_template('editprofile.html', form=form, currUser=editUser)

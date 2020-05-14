@@ -2,8 +2,8 @@
 
 {% block body %}
 <h3>
-    {% if currUser.avatar %}
-        <img class="img-thumbnail" width="50" src="data:image;base64,{{base64encode(page.owner.image.read())}}">
+    {% if currUser.image %}
+        <img class="img-thumbnail" width="50" src="data:image;base64,{{base64encode(currUser.image.read())}}">
     {% else %}
         <img class="img-thumbnail" width="50" src="/static/oths.jpg">
     {% endif %}
