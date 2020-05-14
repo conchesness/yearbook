@@ -27,7 +27,7 @@ class User(Document):
     nextyr = StringField()
     invitelist = ListField()
     meta = {
-        'ordering': ['+lname', '+fname']
+        'ordering': ['+glname', '+gfname']
     }
 
 class OTSeniors(Document):
@@ -72,6 +72,7 @@ class Page(Document):
     caption4 = StringField()
     description = StringField()
     invitelist = ListField()
+    signreqs = ListField(ReferenceField('User'))
     meta = {
         'ordering': ['owner.lname']
     }

@@ -155,10 +155,18 @@ def login():
 
     if currUser.email in admins:
         if currUser.admin == False:
-            currUser.update(admin=True, issenior=True)
+            currUser.update(admin=True)
     else:
         if currUser.admin == True:
             currUser.update(admin=False)
+
+    try:
+        issenior = OTSeniors.objects.get(ousdemail = email)
+        if currUser.issenior == False:
+            currUser.update(issenior = True, aeriesid = issenior.aeriesid)
+    except:
+        if currUser.issenior == True:
+            currUser.update(issenior = False)
 
     session['currUserId'] = str(currUser.id)
     session['displayName'] = currUser.fname+" "+currUser.lname

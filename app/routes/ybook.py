@@ -227,3 +227,10 @@ def allpages():
 
     return render_template('ybookpages.html.j2',pages=pages)
 
+@app.route('/signreq/<pageid>/<signerid>')
+def signreq(pageid,signerid):
+    page = Page.objects.get(pk=pageid)
+    signer = User.objects.get(pk=signerid)
+    page.update(add_to_set__signreqs = signer)
+    flash(f"A request has been added for {page.owner.fname} {page.owner.lname} to add {signer.fname} {signer.lname} to their signers list.")
+    return redirect(url_for('page', pageid=pageid))

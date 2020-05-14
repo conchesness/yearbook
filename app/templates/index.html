@@ -14,9 +14,21 @@
         <div class="col">
             {% if pages and 'credentials' in session %}
             <h3>Pages</h3>
-                {% for page in pages %}
-                    <a href="/page/{{page.id}}">{{page.owner.fname}} {{page.owner.lname}}</a> <br>
+            <table>
+                {% for page in pages | sort(attribute='owner.glname') %}
+                <tr>
+                    <td>
+                        {% if page.owner.image %}
+                            <img class="img-thumbnail" width="50" src="data:image;base64,{{base64encode(page.owner.image.read())}}">
+                        {% endif %}
+                        &nbsp;
+                    </td>
+                    <td>
+                        <a href="/page/{{page.id}}">{{page.owner.fname}} {{page.owner.lname}}</a> <br>
+                    </td>
+                </tr>
                 {% endfor %}
+            </table>
             {% endif %}
         </div>
     </div>

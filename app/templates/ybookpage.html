@@ -42,7 +42,7 @@
     </div>
     <div class="row here">
         <div class="col">
-            {% if session.gdata.emailAddresses[0].value in page.invitelist or page.status == "public" %}
+            {% if session.gdata.emailAddresses[0].value in page.invitelist or page.status == "public" or page.owner.id|string == session['currUserId']|string %}
                 {% if form %}
                     <form method=post>
                         {{ form.hidden_tag() }}
@@ -54,7 +54,7 @@
                     <a href="/sign/{{page.id}}" class="btn btn-primary btn-sm" role="button">Sign</a> <br>
                 {% endif %}
             {% else %}
-                <a href="#" class="btn btn-primary btn-sm" role="button">Ask to sign</a>
+                <a href="/signreq/{{page.id}}/{{session.currUserId}}" class="btn btn-primary btn-sm" role="button">Ask to sign</a>
             {% endif %}
             {% if signs %}
             <table>
