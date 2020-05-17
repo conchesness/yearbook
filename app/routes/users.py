@@ -85,7 +85,33 @@ def index():
     except:
         announcement = None
 
-    return render_template("index.html", pages=pages, announceBody=announceBody, announcement=announcement)
+    try: 
+        currUser = User.objects.get(pk=session['currUserId'])
+    except:
+        currUser=None
+    if currUser:
+        try:
+            invites = Page.objects(invitelist = currUser.email)
+        except:
+            invites = None
+        try:
+            currPage = Page.objects.get(owner = currUser)
+        except:
+            currPage = None
+    else:
+        invites=None
+
+    #TODO find all reqested signers that HAVE signed
+    # if curPage:
+    #     try:
+    #         signers = Sign.objects(page = currPage)
+    #     except:
+    #         signers = None
+    #     if signers:
+    #         for signer.email in currPage.invites
+    #     reqsigners = 
+
+    return render_template("index.html", pages=pages, announceBody=announceBody, announcement=announcement, invites=invites)
 
 
 # a lot of stuff going on here for the user as they log in including creatin new users if this is their first login
