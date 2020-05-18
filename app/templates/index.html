@@ -16,15 +16,35 @@
                 {% if session['issenior'] or session['role'] == "teacher" or session['isadmin'] %}
                 <a href="/editprofile" class="btn btn-info btn-lg" role="button">Edit your profile</a> &nbsp; &nbsp; &nbsp; 
                 <a href="/ybook" class="btn btn-info btn-lg" role="button">Edit Your Senior Page</a> <br> <br>
-                <small><b>Changelog:</b> Removed all contact information from the site (thanks Salman). Edit proflie now only edits
-                your name, pronouns and avatar image. If you have any ideas for this site, please <a href="/newfeedback/zzzindex?">submit some feedback.</a></small> <br>
-                
-                {% if invites %}
-                    <br> <b> You have been invited to sign:</b>
-                    {% for invite in invites %}
-                        <br> <a href="/page/{{invite.id}}">{{invite.owner.fname}} {{invite.owner.lname}}</a> <br>
-                    {% endfor %}
-                {% endif %}
+                <table class="table">
+                    <tr>
+                        <td>
+                        {% if signs %}
+                            <b>You signed:</b> <br>
+                            {% for sign in signs %}
+                                <a href="/page/{{sign.page.id}}">{{sign.page.owner.fname}} {{sign.page.owner.lname}}</a> <br>
+                            {% endfor %}
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if invites %}
+                            <b> You're Invited to sign:</b> <br>
+                            {% for invite in invites %}
+                                <a href="/page/{{invite.id}}">{{invite.owner.fname}} {{invite.owner.lname}}</a> <br>
+                            {% endfor %}
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if reqsigners %}
+                            <b> Signed <a href="/page/{{currPage.id}}">your page</a>:</b> <br>
+                            {% for reqsigner in reqsigners %}
+                                {{reqsigner}} <br>
+                            {% endfor %}
+                        {% endif %}
+                        </td>
+                    </tr>
+                </table>
+
             </div>
             <div class="col">
                 <h1>Announcements</h1>

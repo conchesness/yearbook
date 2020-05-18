@@ -2,7 +2,7 @@ from app import app
 from .scopes import *
 
 from flask import render_template, redirect, url_for, request, session, flash, Markup
-from app.classes.data import User, OTSeniors, Page, Post
+from app.classes.data import User, OTSeniors, Page, Post, Sign
 from app.classes.forms import UserForm
 from .credentials import GOOGLE_CLIENT_CONFIG
 from requests_oauth2.services import GoogleClient
@@ -74,44 +74,64 @@ def before_request():
 @app.route('/pages')
 @app.route('/')
 def index():
+
+    #get all the currently published pages
     try:
         pages = Page.objects(Q(status__ne = "draft"))
     except:
         pages = None
 
+    #Get any announcements
     try:
         announcement = Post.objects.first()
         announceBody = Markup(announcement.body)
     except:
         announcement = None
 
+    #get the curent requesting this page but include error handling because the user might not be logged in
     try: 
         currUser = User.objects.get(pk=session['currUserId'])
     except:
         currUser=None
+
+    #If the user IS logged in
     if currUser:
+        #see if they have any invites
         try:
             invites = Page.objects(invitelist = currUser.email)
         except:
             invites = None
+        #See if they have a page
         try:
             currPage = Page.objects.get(owner = currUser)
         except:
             currPage = None
+        #Get all the pages they have signed
+        try:
+            signs = Sign.objects(owner = currUser)
+        except:
+            signs = None
+    # if they are not logged in set the passed variable to None
     else:
         invites=None
+        currPage = None
+        signs = None
 
-    #TODO find all reqested signers that HAVE signed
-    # if curPage:
-    #     try:
-    #         signers = Sign.objects(page = currPage)
-    #     except:
-    #         signers = None
-    #     if signers:
-    #         for signer.email in currPage.invites
-    #     reqsigners = 
+    if currPage:
+        try:
+            signers = Sign.objects(page = currPage)
+            print(f"signers: {signers}")
+        except:
+            signers = None
+        reqsigners = []
+        if signers:
+            for signer in signers:
+                if signer.owner.email in currPage.invitelist:
+                    reqsigners.append(signer.owner.fname + " " + signer.owner.lname)
+    else:
+        reqsigners = None
 
-    return render_template("index.html", pages=pages, announceBody=announceBody, announcement=announcement, invites=invites)
+    return render_template("index.html", pages=pages, announceBody=announceBody, announcement=announcement, invites=invites, reqsigners=reqsigners, currPage=currPage, signs=signs)
 
 
 # a lot of stuff going on here for the user as they log in including creatin new users if this is their first login

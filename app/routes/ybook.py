@@ -69,7 +69,7 @@ def newpage():
     currUser = User.objects.get(pk=session['currUserId'])
     currYBook = YBook.objects.get(owner = currUser)
 
-    if not currUser.issenior:
+    if not currUser.issenior and not currUser.admin:
         flash(f'You can only create pages if you are a senior.')
         return redirect('/')
     
@@ -111,7 +111,7 @@ def editpage(pageid):
     currYBook = YBook.objects.get(owner = currUser)
     editPage = Page.objects.get(id = pageid)
 
-    if not currUser.issenior:
+    if not currUser.issenior and not currUser.admin:
         flash(f'You can only create pages if you are a senior.')
         return redirect('/')
 
