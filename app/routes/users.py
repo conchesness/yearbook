@@ -120,7 +120,6 @@ def index():
     if currPage:
         try:
             signers = Sign.objects(page = currPage)
-            print(f"signers: {signers}")
         except:
             signers = None
         reqsigners = []
