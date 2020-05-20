@@ -76,8 +76,9 @@ def newpost():
             user=ObjectId(session['currUserId'])
         )
         newPost.save()
+        newPost.reload()
 
-        return redirect(url_for('post.html',postId=newPost.id))
+        return redirect(url_for('post.html',announcement=newPost.id))
 
     flash('Fill out the form to create a new post')
     return render_template('postform.html', form=form)

@@ -71,15 +71,10 @@ def before_request():
 
 # This tells the app what to do if the user requests the home either via '/home' or just'/'
 @app.route('/home')
-@app.route('/pages')
 @app.route('/')
 def index():
 
-    #get all the currently published pages
-    try:
-        pages = Page.objects(Q(status__ne = "draft"))
-    except:
-        pages = None
+
 
     #Get any announcements
     try:
@@ -130,7 +125,7 @@ def index():
     else:
         reqsigners = None
 
-    return render_template("index.html", pages=pages, announceBody=announceBody, announcement=announcement, invites=invites, reqsigners=reqsigners, currPage=currPage, signs=signs)
+    return render_template("index.html", announceBody=announceBody, announcement=announcement, invites=invites, reqsigners=reqsigners, currPage=currPage, signs=signs)
 
 
 # a lot of stuff going on here for the user as they log in including creatin new users if this is their first login

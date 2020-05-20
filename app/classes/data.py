@@ -120,7 +120,7 @@ class Post(Document):
     modifydate = DateTimeField()
 
     meta = {
-        'ordering': ['+createdate']
+        'ordering': ['-createdate']
     }
 
 # TODO Delete/Hide Comment 

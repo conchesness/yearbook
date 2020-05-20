@@ -63,6 +63,17 @@ def editybook():
 
     return render_template('ybookedit.html', form=form, currYBook=currYBook)
 
+@app.route('/pages')
+def pages():
+
+    #get all the currently published pages
+    try:
+        pages = Page.objects(Q(status__ne = "draft"))
+    except:
+        pages = None
+
+    return render_template("ybookpages.html.j2", pages=pages)
+
 @app.route('/newpage', methods=['GET', 'POST'])
 def newpage():
 
@@ -228,7 +239,7 @@ def allpages():
     except:
         pages = None
 
-    return render_template('ybookpages.html.j2',pages=pages)
+    return render_template('ybookpagesall.html.j2',pages=pages)
 
 @app.route('/signreq/<pageid>/<signerid>')
 def signreq(pageid,signerid):
