@@ -87,6 +87,9 @@ def newpage():
     form = PageForm()
 
     if form.validate_on_submit():
+        invitetxt = form.invitetxt.data.strip(", ")
+        invitetxt = invitetxt.replace(" ", "")
+        invitelist = invitetxt.split(",")
 
         newPage = Page(
             owner = currUser,
@@ -96,7 +99,8 @@ def newpage():
             caption1 = form.caption1.data,
             caption2 = form.caption2.data,
             caption3 = form.caption3.data,
-            caption4 = form.caption4.data
+            caption4 = form.caption4.data,
+            invitelist = invitelist
         )
 
         if form.headerimage.data:
@@ -238,8 +242,13 @@ def allpages():
         pages = Page.objects()
     except:
         pages = None
+    
+    try: 
+        users = User.objects()
+    except:
+        users = None
 
-    return render_template('ybookpagesall.html.j2',pages=pages)
+    return render_template('ybookpagesall.html.j2',pages=pages, users=users)
 
 @app.route('/signreq/<pageid>/<signerid>')
 def signreq(pageid,signerid):
