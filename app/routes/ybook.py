@@ -150,9 +150,12 @@ def editpage(pageid):
             caption4 = form.caption4.data,
             invitelist = invitelist
         )
-        if form.headerimage.data and not editPage.headerimage.read():
-            editPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
-        elif form.headerimage.data and editPage.headerimage.read():
+        # if form.headerimage.data and not editPage.headerimage.read():
+        #     editPage.headerimage.put(form.headerimage.data, content_type = 'image/jpeg')
+        # elif form.headerimage.data and editPage.headerimage.read():
+        #     editPage.headerimage.replace(form.headerimage.data, content_type = 'image/jpeg')
+
+        if form.headerimage.data:
             editPage.headerimage.replace(form.headerimage.data, content_type = 'image/jpeg')
 
         if form.image1.data:
